@@ -7,10 +7,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [RouterModule],
+  declarations: [],
   imports: [
     CommonModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  exports: [RouterModule]
 })
 export class MemberRoutingModule { }
