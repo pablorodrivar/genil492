@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { BehaviorSubject } from 'rxjs';
+import { ApiController } from '../api-controller';
 
 const TOKEN_KEY = 'auth-token';
 
@@ -12,7 +13,7 @@ export class AuthenticationService {
 
   authenticationState = new BehaviorSubject(false);
 
-  constructor(private storage: Storage, private plt: Platform) {
+  constructor(private storage: Storage, private plt: Platform, private apiCtrl: ApiController) {
     this.plt.ready().then(() => {
       this.checkToken();
     });
