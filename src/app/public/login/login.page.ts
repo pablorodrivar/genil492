@@ -7,6 +7,8 @@ import { AuthenticationService } from './../../services/authentication.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  public user: string;
+  public password: string;
 
   constructor(private authService: AuthenticationService) { }
 
@@ -14,6 +16,6 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    this.authService.login();
+    this.authService.login(this.user, this.password);
   }
 }
