@@ -28,7 +28,11 @@ export class AuthenticationService {
   }
 
   async login(user: string, password: string) {
-    await HttpService.getAuthentication(user, password).then(val => {
+    await this.httpService.getAuthentication(user, password).then(val => {
+      this.httpService.getUser(user).then(val => {
+        this.httpService.postSession(val.user[0].id, val.user[0].login);
+      });
+
       return this.storage.set(TOKEN_KEY, val).then(() => {
         this.authenticationState.next(true);
       });
