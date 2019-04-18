@@ -95,6 +95,62 @@ export class HttpService implements OnInit {
       }
     }).catch(err => err);
     // END FETCH
-    }
+  }
+
+  async postUser(userData: any) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/user/new";
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      },
+      body: JSON.stringify(
+        {
+          "login": userData[0] , 
+          "password": window.btoa(userData[1]),
+          "email": userData[2],
+          "name": userData[3],
+          "surname": userData[4],
+          "sign_up_date": new Date(),
+          "role": 3,
+          "photo": null
+        }
+        )
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
+
+  async getEmail(email: string) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/valid_email/email/" + email;
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
 }
 

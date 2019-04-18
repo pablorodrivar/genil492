@@ -26,7 +26,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-input placeholder="Nickname*"></ion-input>
+    <ion-input [(ngModel)]="nickname" placeholder="Nickname*"></ion-input>
   </ion-item>      
 
   <!-- Password -->
@@ -34,7 +34,7 @@
     <ion-label class="label">Contraseña*</ion-label>      
   </ion-item>
   <ion-item>
-    <ion-input placeholder="Contraseña*" type="password"></ion-input>
+    <ion-input [(ngModel)]="password" placeholder="Contraseña (6 caracteres min.)*" type="password"></ion-input>
   </ion-item>
 
   <!-- Repeat -->
@@ -42,7 +42,7 @@
     <ion-label class="label">Repite la contraseña*</ion-label>      
   </ion-item>
   <ion-item>
-    <ion-input placeholder="Repite la contraseña*" type="password"></ion-input>
+    <ion-input [(ngModel)]="password2" placeholder="Repite la contraseña*" type="password"></ion-input>
   </ion-item>
 
   <!-- Email -->
@@ -50,7 +50,7 @@
     <ion-label class="label">Email*</ion-label>      
   </ion-item>
   <ion-item>
-    <ion-input placeholder="Email*" type="email"></ion-input>
+    <ion-input [(ngModel)]="email" placeholder="Email validado*" type="email"></ion-input>
   </ion-item>
 
   <!-- Nombre -->
@@ -58,7 +58,7 @@
     <ion-label class="label">Nombre*</ion-label>      
   </ion-item>
   <ion-item>
-    <ion-input placeholder="Nombre*"></ion-input>
+    <ion-input [(ngModel)]="name" placeholder="Nombre*"></ion-input>
   </ion-item>
 
   <!-- Apellidos -->
@@ -66,8 +66,9 @@
     <ion-label class="label">Apellidos*</ion-label>      
   </ion-item>
   <ion-item>
-    <ion-input placeholder="Apellidos*"></ion-input>
+    <ion-input [(ngModel)]="surname" placeholder="Apellidos*"></ion-input>
   </ion-item>
 
+  <ion-button (click)="register()" style="margin-top: 20px;" expand="block">Registro</ion-button>
 
 </ion-content>

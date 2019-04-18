@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { HttpService } from '../../services/http.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ToastController } from '@ionic/angular';
+import { type } from 'os';
 
 @Component({
   selector: 'app-register',
@@ -11,8 +15,23 @@ export class RegisterPage implements OnInit {
 
   imageResponse: any;
   options: any;
+  nickname: string;
+  password: string;
+  password2:string;
+  email: string;
+  name: string;
+  surname: string;
+  userData: string[] = [];
+  errorMsg: string;
+  valid: boolean = true;
  
-  constructor(public alertController: AlertController, private imagePicker: ImagePicker) { }
+  constructor(
+    public alertController: AlertController, 
+    private imagePicker: ImagePicker, 
+    private httpService: HttpService,
+    public toastController: ToastController,
+    public authService: AuthenticationService
+    ) { }
 
   ngOnInit() {
   }
@@ -58,5 +77,95 @@ export class RegisterPage implements OnInit {
     }, (err) => {
       alert(err);
     });
+  }
+
+  register() {
+    if(this.password != this.password2) {
+      this.errorMsg = "Las contrasenyas no coinciden."
+    } else {
+      this.userData.push(this.nickname, this.password, this.email, this.name, this.surname);        
+
+      let i: number = 0;
+      this.userData.forEach((val) => {
+        this.validate(i, val);
+        i++;
+      });
+
+      if(this.valid) {
+        this.httpService.getEmail(this.email).then((res) => {
+          if(res.status != 205) {
+            this.httpService.postUser(this.userData).then(() => {
+              this.authService.login(this.userData[0], this.password).then(() => {                
+              });
+            });
+
+            this.errorMsg = "Usuario registrado."
+          } else {
+            this.errorMsg = "El email no figura en la base de datos. Por favor contacte con Pablo Scouter."
+          }   
+          
+          if(res.status == 401) {
+            this.errorMsg = "El nickname o el email ya existen."
+          }
+        }).catch(() => {
+          this.errorMsg = "El email no figura en la base de datos. Por favor contacte con Pablo Scouter."
+        });        
+      }      
+    }
+    
+    this.presentToast();
+    this.errorMsg = "Usuario registrado.";
+  }
+
+  validate(index: number, input: string) {
+    if(typeof input === "undefined") {      
+      this.errorMsg = "Rellene los campos obligatorios";
+      this.valid = false;
+    } else {
+      switch (index) {
+        case 0:
+          if(input.length < 4) {
+            this.errorMsg = "El nickname no puede tener menos de 4 caracteres.";
+            this.valid = false;
+          }
+        break;
+  
+        case 1: 
+          if(input.length < 6) {
+            this.errorMsg = "La contrasenya debe tener al menos 6 caracteres."
+            this.valid= false;
+          }
+        break;
+  
+        case 2:
+          this.httpService.getEmail(input).catch(() => {
+            this.errorMsg = "El email no figura en la base de datos. Por favor contacte con Pablo Scouter.";
+            this.valid = false;
+          });
+        break;
+  
+        case 3:
+          if(input.length < 1) {
+            this.errorMsg = "El nombre no puede ser vacio.";
+            this.valid = false;
+          }
+        break;
+  
+        case 4:
+          if(input.length < 1) {
+            this.errorMsg = "El apellido no puede ser vacio.";
+            this.valid = false;
+          }
+        break;
+      }
+    }    
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: this.errorMsg,
+      duration: 2000
+    });
+    toast.present();
   }
 }
