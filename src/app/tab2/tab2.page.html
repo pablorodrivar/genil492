@@ -1,9 +1,97 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Two
+      Dashboard
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content padding>
+  <ion-item>
+    <ion-label>Secciones</ion-label>
+  </ion-item>
+  <ion-grid style="margin: 0 auto; display: table;">
+    <ion-row>
+      <ion-col class="grid-img">
+        <ion-card>
+          <ion-card-header>Colonia</ion-card-header>
+          <ion-card-content>
+            <img src="../../assets/forest1.jpg" class="img-op">
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col class="grid-img">
+        <ion-card>
+          <ion-card-header>Manada</ion-card-header>
+          <ion-card-content>
+            <img src="../../assets/forest1.jpg" class="img-op">
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="grid-img">
+          <ion-card>
+              <ion-card-header>Tropa</ion-card-header>
+              <ion-card-content>
+                <img src="../../assets/forest1.jpg" class="img-op">
+              </ion-card-content>
+            </ion-card>
+      </ion-col>
+      <ion-col class="grid-img">
+          <ion-card>
+              <ion-card-header>Unidad</ion-card-header>
+              <ion-card-content>
+                <img src="../../assets/forest1.jpg" class="img-op">
+              </ion-card-content>
+            </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="grid-img">
+            <ion-card>
+                <ion-card-header>Clan</ion-card-header>
+                <ion-card-content>
+                  <img src="../../assets/forest1.jpg" class="img-op">
+                </ion-card-content>
+              </ion-card>
+        </ion-col>
+        <ion-col class="grid-img">
+            <ion-card>
+                <ion-card-header>Kraal</ion-card-header>
+                <ion-card-content>
+                  <img src="../../assets/forest1.jpg" class="img-op">
+                </ion-card-content>
+              </ion-card>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item>
+    <ion-label>
+      Servicios
+    </ion-label>
+  </ion-item>
+
+  <ion-list>
+    <ion-item lines="none">
+      <ion-icon slot="start" name="cube"></ion-icon>
+      <ion-label>Intendencia</ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="bonfire"></ion-icon>
+      <ion-label>Gestionar actividades</ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="musical-notes"></ion-icon>
+      <ion-label>Cancionero</ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="volume-high"></ion-icon>
+      <ion-label>Altavoz</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -68,6 +68,7 @@ export class RegisterPage implements OnInit {
       // window.imagePicker.OutputType.BASE64_STRING (1)
       outputType: 1
     };
+    
     this.imageResponse = [];
     this.imagePicker.getPictures(this.options).then((results) => {
       for (var i = 0; i < results.length; i++) {
