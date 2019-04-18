@@ -4,7 +4,6 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { HttpService } from '../../services/http.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ToastController } from '@ionic/angular';
-import { type } from 'os';
 
 @Component({
   selector: 'app-register',
