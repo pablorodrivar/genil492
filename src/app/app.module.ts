@@ -11,9 +11,10 @@ import { AppComponent } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { ThumbContentPipe } from './pipes/thumb-content.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ThumbContentPipe],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -26,7 +27,8 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     StatusBar,    
     SplashScreen,
     ImagePicker,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    ThumbContentPipe
   ],
   bootstrap: [AppComponent]
 })
