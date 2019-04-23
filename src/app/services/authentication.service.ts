@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpService } from './http.service';
 
 const TOKEN_KEY = 'auth-token';
+const USER_KEY = 'user-key';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,8 @@ export class AuthenticationService {
       this.httpService.getUser(user).then(val => {
         console.log(val)
         this.httpService.postSession(val.user[0].id, val.user[0].login);
+
+        this.storage.set(USER_KEY, val.user[0]);
       });
 
       return this.storage.set(TOKEN_KEY, val).then(() => {
@@ -42,6 +45,7 @@ export class AuthenticationService {
 
   logout() {
     return this.storage.remove(TOKEN_KEY).then(() => {
+      this.storage.remove(USER_KEY);
       this.authenticationState.next(false);
     });
   }

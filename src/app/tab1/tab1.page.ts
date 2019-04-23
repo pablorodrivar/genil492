@@ -16,7 +16,6 @@ export class Tab1Page implements OnInit{
   ngOnInit() {
     this.httpService.getLastPosts().then(res => {
       this.posts = res.post;
-      console.log(this.posts)
-    })    
-  }  
+    })
+  }    
 }

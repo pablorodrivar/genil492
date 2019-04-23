@@ -8,10 +8,15 @@
 
 <ion-content>
   <ion-card *ngFor="let post of posts">
-    <ion-card-title>{{ post.title }}</ion-card-title> 
+    <ion-item>{{ post.title }}</ion-item> 
     <ion-card-content>
       <img class="thumbnail" src="../../assets/avatar.png">
-      {{ post.content.substring(0, 100) }}...
+      <ion-item *ngIf="post.content.length > 100">{{ post.content.substring(0, 100) }}...</ion-item>
+      <ion-item *ngIf="post.content.length < 100">{{ post.content }}</ion-item>
+      <ion-item lines="none">
+        <ion-item slot="start" lines="none">{{ post.author }}</ion-item>
+        <ion-item slot="end" lines="none">{{ post.date }}</ion-item>
+      </ion-item>
     </ion-card-content>
   </ion-card> 
 </ion-content>

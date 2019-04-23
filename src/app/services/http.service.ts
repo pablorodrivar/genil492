@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 
 const TOKEN_KEY = 'auth-token';
+const USER_KEY = 'user-key';
 
 @Injectable({
   providedIn: 'root'
@@ -155,6 +156,28 @@ export class HttpService implements OnInit {
 
   async getLastPosts() {
     let url = "https://genil-api-v3-puvlo.c9users.io/public/post/last";
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
+
+  async getRole(id: number) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/role/" + id;
     let b64access = window.btoa(this.token);
     // START FETCH
     return fetch(url, {

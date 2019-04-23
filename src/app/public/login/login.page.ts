@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './../../services/authentication.service';
 import { ToastController } from '@ionic/angular';
-import { componentNeedsResolution } from '@angular/core/src/metadata/resource_loading';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +19,7 @@ export class LoginPage implements OnInit {
   login() {        
     this.authService.login(this.user, this.password).catch(() => {
       this.presentToast();
+
     });
   }
 
