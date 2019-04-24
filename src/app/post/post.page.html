@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button><ion-icon name="share"></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-title>Post</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img src="../../assets/forest1.jpg" class="post-img">
+  <ion-item><ion-label class="title">{{ post_title }}</ion-label></ion-item>  
+  <ion-item lines="none"><ion-label slot="start">{{ post_date }}</ion-label><ion-label slot="end" style="text-align:end">{{ post_author }}</ion-label></ion-item>
+  
+  <ion-item lines="none" style="margin-top:3%;"><ion-text>{{ post_content }}</ion-text></ion-item>
+
+  <ion-item><ion-label class="comments">Comentarios</ion-label></ion-item>
+
+  <ion-item *ngIf="comments.length == 0" style="text-align:center; font-size:13px; color:rgb(167, 161, 161)"><ion-label>No hay comentarios todavia, se el primero</ion-label></ion-item>
+  <ion-card *ngFor="let com of comments">
+      <ion-avatar padding>
+        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+      </ion-avatar>
+    <ion-card-header>
+      <ion-card-subtitle>{{ role }}</ion-card-subtitle>
+      <ion-card-title>{{ login }}</ion-card-title>
+    </ion-card-header>
+    
+    <ion-card-content>
+      {{ com.comment }}
+    </ion-card-content>
+  </ion-card>  
+  
+  <ion-item style="text-align: center;"><ion-label>Deja tu comentario</ion-label></ion-item>
+  <ion-item lines="none" style="height: 16%;"><ion-textarea rows="6" placeholder="Deja tu comentario" maxlength="280" [(ngModel)]="comment"></ion-textarea></ion-item>
+  <ion-item lines="none"><ion-button fill style="width:100%; border: solid 1px #ECEBEB;" (click)="sendComment()">Enviar</ion-button></ion-item>  
+</ion-content>

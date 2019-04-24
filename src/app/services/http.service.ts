@@ -197,5 +197,78 @@ export class HttpService implements OnInit {
     }).catch(err => err);
     // END FETCH
   }
+
+  async getPost(id: number) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/post/" + id;
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
+
+  async postComment(commentData: any) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/comment/new";
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      },
+      body: JSON.stringify(
+        {
+          "user": commentData[0],
+          "post": commentData[1],
+          "comment": commentData[2]
+        }
+        )
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
+
+  async getPostComments(post_id: number) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/comment/post_id/" + post_id;
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
 }
 

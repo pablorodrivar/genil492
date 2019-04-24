@@ -14,16 +14,18 @@ const USER_KEY = 'user-key';
 export class Tab3Page implements OnInit{
   user: any;
   role: any;
+  name: string;
 
   constructor(private authService: AuthenticationService, private storage: Storage, private httpService: HttpService) {}
 
-  ngOnInit() {
-    this.storage.get(USER_KEY).then(val => {
+  async ngOnInit() {
+    await this.storage.get(USER_KEY).then(val => {
       this.user = val;
+      this.name = this.user.login;
       
       this.httpService.getRole(this.user.role).then(val => {
-        console.log(val.name)
-        this.role = val.name;
+        this.role = val.role[0].name;
+        this.role = this.role.toUpperCase();
       });
     });    
   }

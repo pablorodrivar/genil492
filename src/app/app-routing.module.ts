@@ -6,11 +6,14 @@ const routes: Routes = [
   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
   { path: 'login', loadChildren: './public/login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './public/register/register.module#RegisterPageModule' },
+  { path: 'post/:id', loadChildren: './post/post.module#PostPageModule' },
   {
     path: 'members',
     canActivate: [AuthGuard],
     loadChildren: './members/member-routing.module#MemberRoutingModule'
-  }
+  },
+  { path: 'post', loadChildren: './post/post.module#PostPageModule' }
+
 ];
 @NgModule({
   imports: [

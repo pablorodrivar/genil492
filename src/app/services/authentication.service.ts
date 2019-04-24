@@ -31,7 +31,6 @@ export class AuthenticationService {
   async login(user: string, password: string) {
     await this.httpService.getAuthentication(user, window.btoa(password)).then(val => {
       this.httpService.getUser(user).then(val => {
-        console.log(val)
         this.httpService.postSession(val.user[0].id, val.user[0].login);
 
         this.storage.set(USER_KEY, val.user[0]);
