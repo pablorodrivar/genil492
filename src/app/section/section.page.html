@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="section_id == 0">Colonia</ion-title>
+    <ion-title *ngIf="section_id == 1">Manada</ion-title>
+    <ion-title *ngIf="section_id == 2">Tropa</ion-title>
+    <ion-title *ngIf="section_id == 3">Unidad</ion-title>
+    <ion-title *ngIf="section_id == 4">Clan</ion-title>
+    <ion-title *ngIf="section_id == 5">Kraal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item><ion-label>Blog de la Seccion</ion-label><ion-button slot="end" fill>Ir</ion-button></ion-item>
+
+</ion-content>

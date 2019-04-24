@@ -11,14 +11,14 @@
     <ion-label>Secciones</ion-label>
   </ion-item>
   <ion-item lines="none" style="margin-top: 3%;">
-    <ion-button expand="block" color="primary" class="sect-button">Colonia</ion-button>
-    <ion-button expand="block" color="warning" class="sect-button">Manada</ion-button>
-    <ion-button expand="block" color="success" class="sect-button">Tropa</ion-button>
+    <ion-button expand="block" color="primary" class="sect-button" (click)="toSection(0)">Colonia</ion-button>
+    <ion-button expand="block" color="warning" class="sect-button" (click)="toSection(1)">Manada</ion-button>
+    <ion-button expand="block" color="success" class="sect-button" (click)="toSection(2)">Tropa</ion-button>
   </ion-item> 
   <ion-item lines="none" style="margin-top: 3%;">
-    <ion-button expand="block" color="medium" class="sect-button">Unidad</ion-button>
-    <ion-button expand="block" color="danger" class="sect-button">Clan</ion-button>
-    <ion-button expand="block" color="secondary" class="sect-button">Kraal</ion-button>
+    <ion-button expand="block" color="medium" class="sect-button" (click)="toSection(3)">Unidad</ion-button>
+    <ion-button expand="block" color="danger" class="sect-button" (click)="toSection(4)">Clan</ion-button>
+    <ion-button expand="block" color="secondary" class="sect-button" (click)="toSection(5)">Kraal</ion-button>
   </ion-item>  
 
   <ion-item>

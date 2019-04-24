@@ -7,12 +7,14 @@ const routes: Routes = [
   { path: 'login', loadChildren: './public/login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './public/register/register.module#RegisterPageModule' },
   { path: 'post/:id', loadChildren: './post/post.module#PostPageModule' },
+  { path: 'section/:id', loadChildren: './section/section.module#SectionPageModule' },
   {
     path: 'members',
     canActivate: [AuthGuard],
     loadChildren: './members/member-routing.module#MemberRoutingModule'
   },
-  { path: 'post', loadChildren: './post/post.module#PostPageModule' }
+  { path: 'post', loadChildren: './post/post.module#PostPageModule' },  { path: 'section', loadChildren: './section/section.module#SectionPageModule' }
+
 
 ];
 @NgModule({
