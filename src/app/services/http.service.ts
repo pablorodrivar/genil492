@@ -445,5 +445,56 @@ export class HttpService implements OnInit {
     }).catch(err => err);
     // END FETCH
   }
+
+  async getSons(father_id: number) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/family/son/" + father_id;
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
+
+  async postAssistance(asData: any) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/assistance/new";
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      },
+      body: JSON.stringify(
+        {
+          "user": asData[0],
+          "login": asData[1],
+          "event": asData[2]                
+        }
+        )
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
 }
 

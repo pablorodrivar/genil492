@@ -23,7 +23,7 @@
   <ion-item *ngIf="eventExists" color="secondary" lines ="none"><ion-item lines="none" color="secondary" class="dates" slot="start">{{ event_beg }}</ion-item><ion-item class="dates" color="secondary" lines="none" slot="end">{{ event_end }}</ion-item></ion-item>
   <ion-item lines="none" style="margin-top:3%;"><ion-text>{{ post_content }}</ion-text></ion-item>
 
-  <ion-button *ngIf="eventExists" color="primary" expand="full" style="margin-top: 3%;">Asistire</ion-button>  
+  <ion-button *ngIf="eventExists" color="primary" expand="full" style="margin-top: 3%;" (click)="asistir()">Asistire</ion-button>  
 
   <ion-item><ion-label class="comments">Comentarios</ion-label></ion-item>
 

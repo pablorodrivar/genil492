@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { HttpService } from '../services/http.service';
 import { Storage } from '@ionic/storage';
-import { CommentStmt } from '@angular/compiler';
+import { AlertController } from '@ionic/angular';
 
 const USER_KEY = 'user-key';
 
@@ -20,6 +20,7 @@ export class PostPage implements OnInit {
   post_date: any;
   post_gallery: any;
   post_thumbnail: any;
+  post_section: any;
   user: any;
   login: any;
   role: any;
@@ -30,9 +31,12 @@ export class PostPage implements OnInit {
   comment: any;
   commentData: any[] = [];
   comments: any[] = [];
+  sons: any[] = [];
   eventExists:boolean = false;
+  clickable: boolean = false;
 
-  constructor(private route: ActivatedRoute, private httpService: HttpService, private storage: Storage) { }
+  constructor(private route: ActivatedRoute, private httpService: HttpService, private storage: Storage,
+    private alertController: AlertController) { }
 
   async ngOnInit() {
     this.post_id = this.route.snapshot.paramMap.get('id');
@@ -52,12 +56,12 @@ export class PostPage implements OnInit {
       this.post_author = val.post[0].author;
       this.post_content = val.post[0].content;
       this.post_date = val.post[0].date;
+      this.post_section = val.post[0].section;
       this.post_gallery = val.post[0].gallery;
       this.post_thumbnail = val.post[0].thumbnail;
     });
 
-    await this.httpService.getEvent(this.post_title).then(val => {      
-      console.log(val)
+    await this.httpService.getEvent(this.post_title).then(val => {
       if(val !== "No existen eventos en la base de datos con ese nombre.") {
         this.eventExists = true;
       }        
@@ -75,6 +79,13 @@ export class PostPage implements OnInit {
         this.comments.push(element);
       });      
     });
+
+    await this.httpService.getSons(this.user.id).then(val => {
+      console.log(val)
+      val.son.forEach(element => {
+        this.sons.push(element.son);
+      });
+    });
   }
 
   sendComment() {
@@ -86,4 +97,72 @@ export class PostPage implements OnInit {
     this.comments.push(this.commentData[2]);
     this.comment = "";
   }
+
+  async showAlert() {
+    const alert = await this.alertController.create({
+      header: 'Aviso',
+      message: 'No tienes permisos para realizar esa acción',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  asistir() {
+    if(this.user.role >= 6 && this.user.role <= 10) {
+      this.clickable = true;
+    } else {
+      switch(this.post_section) {
+        case 0:
+          this.clickable = true;
+        break;
+  
+        case 1:
+          if(this.user.role == 1) {
+            this.clickable = true;
+          } else {
+            this.clickable = false;
+          }
+        break;
+  
+        case 2:
+          if(this.user.role == 2) {
+            this.clickable = true;
+          } else {
+            this.clickable = false;
+          }
+        break;
+
+        case 3:
+          if(this.user.role == 3) {
+            this.clickable = true;
+          } else {
+            this.clickable = false;
+          }
+        break;
+
+        case 4:
+          if(this.user.role == 4 || this.user.role == 13) {
+            this.clickable = true;
+          } else {
+            this.clickable = false;
+          }
+        break;
+
+        case 5:
+          if(this.user.role == 5 || this.user.role == 14) {
+            this.clickable = true;
+          } else {
+            this.clickable = false;
+          }
+        break;
+      }
+    }
+
+    if(!this.clickable) {
+      this.showAlert();
+    } else {
+      
+    }
+  }    
 }
