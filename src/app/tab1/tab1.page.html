@@ -11,12 +11,42 @@
     <ion-label style="font-size: 20px;">Ultimas noticias</ion-label>
   </ion-item>
   <ion-card *ngFor="let post of posts" (click)="goToPost(post.id)">
-    <ion-item color="primary">
-      <ion-item color="primary" style="color: white;" slot="start">{{ post.title }}</ion-item> 
-      <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
-      <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
-      <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+    <ion-item *ngIf="post.section == 0" color="secondary">
+      <ion-item color="secondary" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+      <ion-item color="secondary" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+      <ion-item color="secondary" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+      <ion-item color="secondary" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
     </ion-item>    
+    <ion-item *ngIf="post.section == 1" color="primary">
+        <ion-item color="primary" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+        <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+        <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+        <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+      </ion-item>
+      <ion-item *ngIf="post.section == 2" color="warning">
+        <ion-item color="warning" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+        <ion-item color="warning" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+        <ion-item color="warning" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+        <ion-item color="warning" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+      </ion-item>
+      <ion-item *ngIf="post.section == 3" color="success">
+        <ion-item color="success" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+        <ion-item color="success" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+        <ion-item color="success" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+        <ion-item color="success" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+      </ion-item>
+      <ion-item *ngIf="post.section == 4" color="unidad">
+        <ion-item color="unidad" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+        <ion-item color="unidad" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+        <ion-item color="unidad" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+        <ion-item color="unidad" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+      </ion-item>
+      <ion-item *ngIf="post.section == 5" color="danger">
+        <ion-item color="danger" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+        <ion-item color="danger" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+        <ion-item color="danger" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+        <ion-item color="danger" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+      </ion-item>      
     <ion-card-content>
       <img class="thumbnail" src="../../assets/forest1.jpg">
       <ion-item *ngIf="post.content.length > 100">{{ post.content.substring(0, 100) }}...</ion-item>
@@ -28,7 +58,7 @@
     </ion-card-content>
   </ion-card> 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addPost()">
+    <ion-fab-button *ngIf="user.role >= 0 && user.role <=5" (click)="addPost()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

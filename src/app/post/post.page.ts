@@ -66,8 +66,7 @@ export class PostPage implements OnInit {
       this.event_type = val.event[0].type;
 
       this.httpService.numberOfAssistants(val.event[0].id).then(val => {
-        this.asistentes = val.as[0]['count(*)'];
-        this.post_title = this.post_title + " (" + this.asistentes + " asistentes)"
+        this.asistentes = val.as[0]['count(*)'] +  " asistentes";
       });
     });
 

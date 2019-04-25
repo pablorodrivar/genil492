@@ -335,6 +335,7 @@ export class HttpService implements OnInit {
           "author": postData[4],
           "event": postData[2],
           "scope": postData[3],
+          "section": postData[5],
           "thumbnail": "null",
           "gallery": "null"
         }

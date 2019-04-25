@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { Storage } from '@ionic/storage';
 import { ToastController } from '@ionic/angular';
+import { Router,ActivatedRoute } from '@angular/router';
 
 const USER_KEY = 'user-key';
 
@@ -24,7 +25,8 @@ export class AddPostPage implements OnInit {
   eventData: any[] = [];
   postable: boolean = true;
 
-  constructor(private httpService: HttpService, private storage: Storage, public toastController: ToastController) { }
+  constructor(private httpService: HttpService, private storage: Storage, public toastController: ToastController,
+    private router: Router) { }
 
   async ngOnInit() {
     await this.storage.get(USER_KEY).then(val => {
@@ -34,11 +36,10 @@ export class AddPostPage implements OnInit {
 
   tipoPost(t: any) {
     this.tipo = t;
-    console.log(this.tipo)
   }
 
-  scope(s: any) {
-    this.ambito = s;
+  scope(s: any) {  
+    this.ambito = s;   
   }
 
   post() {
@@ -48,10 +49,11 @@ export class AddPostPage implements OnInit {
     this.postData.push(this.tipo);
     this.postData.push(this.ambito);
     this.postData.push(this.user.login);
-    this.eventData.push(this.title);
+    this.postData.push(this.user.role);
+    this.eventData.push(this.title);    
     this.eventData.push(this.dateBeg);
     this.eventData.push(this.dateEnd);
-    this.eventData.push(this.tipo);
+    this.eventData.push(this.tipo);    
 
     this.postData.forEach(element => {
       if(element === undefined) {
@@ -80,6 +82,8 @@ export class AddPostPage implements OnInit {
         });
       }  
     }
+
+    this.router.navigate(['']);
   }
 
   async presentToast() {

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from '../pojo/post';
 import { HttpService } from '../services/http.service';
 import { ThumbContentPipe } from '../pipes/thumb-content.pipe';
 import { Router,ActivatedRoute } from '@angular/router';
-import { restoreView } from '@angular/core/src/render3';
+import { Storage } from '@ionic/storage';
 
+const USER_KEY = 'user-key';
 
 @Component({
   selector: 'app-tab1',
@@ -13,10 +13,15 @@ import { restoreView } from '@angular/core/src/render3';
 })
 export class Tab1Page implements OnInit{
   posts: any[] = [];
+  user: any;
 
-  constructor(private httpService: HttpService, private thumbContent: ThumbContentPipe, private router: Router) {}
+  constructor(private httpService: HttpService, private router: Router, private storage: Storage) {}
   
   async ngOnInit() {
+    await this.storage.get(USER_KEY).then(val => {
+      this.user = val;
+    });
+
     await this.httpService.getLastPosts().then(res => {      
       res.post.forEach(element => {
         if(element.scope == 0) {
