@@ -29,6 +29,7 @@ export class PostPage implements OnInit {
   event_beg: any;
   event_end: any;
   event_type: any;
+  event_assistants: any;
   asistentes: any;
   comment: any;
   commentData: any[] = [];
@@ -85,7 +86,11 @@ export class PostPage implements OnInit {
     await this.httpService.getPostComments(this.post_id).then(val => {
       val.comment.forEach(element => {
         this.comments.push(element);
-      });      
+      });  
+    });
+
+    await this.httpService.getAssistantsByEvent(this.event_id).then(ass => {
+      this.event_assistants = ass.as;
     });
 
     await this.httpService.getSons(this.user.id).then(val => {
@@ -149,16 +154,17 @@ export class PostPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (val) => {
-            this.httpService.getAssistantsByEvent(this.event_id).then(ass => {
-              ass.as.forEach(element => {
-                if(element.user == val) {
-                  this.repetido = true;
-                  this.presentToast();
-                }
-              });              
-            });
+            this.event_assistants.forEach(element => {
+              if(element.user == val[0]) {
+                this.repetido = true;
+                this.presentToast();
+              }
+            });  
+
+            console.log("repetido " + this.repetido)
 
             if(!this.repetido) {
+              this.repetido = false;
               val.forEach(element => {
                 this.assData.push(element);            
                 this.assData.push(this.event_id);
@@ -169,7 +175,8 @@ export class PostPage implements OnInit {
                 this.repetido = false;
                 this.assData = [];
                 this.presentToastSucc();
-              });              
+              });
+              this.doRefresh();              
             }
           }
         }
@@ -177,6 +184,14 @@ export class PostPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  doRefresh() {
+    setTimeout(() => {
+      this.asistentes = [];
+      this.ngOnInit();
+      console.log('Async operation has ended');
+    }, 2000);    
   }
 
   async presentToast() {
