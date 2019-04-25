@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { HttpService } from '../services/http.service';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 const USER_KEY = 'user-key';
 
@@ -24,6 +25,7 @@ export class PostPage implements OnInit {
   user: any;
   login: any;
   role: any;
+  event_id: any;
   event_beg: any;
   event_end: any;
   event_type: any;
@@ -32,11 +34,15 @@ export class PostPage implements OnInit {
   commentData: any[] = [];
   comments: any[] = [];
   sons: any[] = [];
+  inputs: any[] = [];
+  assData: any[] = [];
+  checked: boolean;
+  repetido: boolean = false;
   eventExists:boolean = false;
   clickable: boolean = false;
 
   constructor(private route: ActivatedRoute, private httpService: HttpService, private storage: Storage,
-    private alertController: AlertController) { }
+    private alertController: AlertController, private toastController: ToastController) { }
 
   async ngOnInit() {
     this.post_id = this.route.snapshot.paramMap.get('id');
@@ -65,6 +71,8 @@ export class PostPage implements OnInit {
       if(val !== "No existen eventos en la base de datos con ese nombre.") {
         this.eventExists = true;
       }        
+
+      this.event_id = val.event[0].id;
       this.event_beg = "Desde " + val.event[0].beg_date;
       this.event_end = "Hasta " + val.event[0].end_date;
       this.event_type = val.event[0].type;
@@ -81,9 +89,27 @@ export class PostPage implements OnInit {
     });
 
     await this.httpService.getSons(this.user.id).then(val => {
-      console.log(val)
       val.son.forEach(element => {
         this.sons.push(element.son);
+      });
+
+      this.inputs = [];
+      this.sons.forEach(son => {
+        this.httpService.getUserById(son).then(name => {
+          this.inputs.push({
+            "name": name.user[0].name,
+            "type": "checkbox",
+            "label": name.user[0].name,
+            "value": name.user[0].id
+          });
+        });
+      });
+
+      this.inputs.push({
+        "name": "Yo",
+        "type": "checkbox",
+        "label": "Yo",
+        "value": this.user.id
       });
     });
   }
@@ -108,8 +134,69 @@ export class PostPage implements OnInit {
     await alert.present();
   }
 
+  async sonAlert() {
+    const alert = await this.alertController.create({
+      header: '¿Quién asistirá?',
+      inputs: this.inputs,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (val) => {
+            this.httpService.getAssistantsByEvent(this.event_id).then(ass => {
+              ass.as.forEach(element => {
+                if(element.user == val) {
+                  this.repetido = true;
+                  this.presentToast();
+                }
+              });              
+            });
+
+            if(!this.repetido) {
+              val.forEach(element => {
+                this.assData.push(element);            
+                this.assData.push(this.event_id);
+                console.log(this.assData)
+                this.httpService.postAssistance(this.assData).then(res => {
+                  console.log(res)
+                });                             
+                this.repetido = false;
+                this.assData = [];
+                this.presentToastSucc();
+              });              
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Ese usuario ya va está en la lista de asistencia.',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async presentToastSucc() {
+    const toast = await this.toastController.create({
+      message: 'Añadido(s) a la lista de asistencia.',
+      duration: 2000
+    });
+    toast.present();
+  }
+
   asistir() {
-    if(this.user.role >= 6 && this.user.role <= 10) {
+    if((this.user.role >= 6 && this.user.role <= 10) || this.user.role == 0) {
       this.clickable = true;
     } else {
       switch(this.post_section) {
@@ -162,7 +249,7 @@ export class PostPage implements OnInit {
     if(!this.clickable) {
       this.showAlert();
     } else {
-      
+      this.sonAlert();
     }
   }    
 }
