@@ -7,8 +7,16 @@
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label style="font-size: 20px;">Ultimas noticias</ion-label>
+  </ion-item>
   <ion-card *ngFor="let post of posts" (click)="goToPost(post.id)">
-    <ion-item>{{ post.title }}</ion-item> 
+    <ion-item color="primary">
+      <ion-item color="primary" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+      <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+      <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+      <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+    </ion-item>    
     <ion-card-content>
       <img class="thumbnail" src="../../assets/forest1.jpg">
       <ion-item *ngIf="post.content.length > 100">{{ post.content.substring(0, 100) }}...</ion-item>

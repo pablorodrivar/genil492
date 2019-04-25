@@ -14,7 +14,7 @@ const USER_KEY = 'user-key';
 export class PostPage implements OnInit {
 
   post_id: any;
-  post_title: any;
+  post_title: string;
   post_author: any;
   post_content: any;
   post_date: any;
@@ -23,9 +23,14 @@ export class PostPage implements OnInit {
   user: any;
   login: any;
   role: any;
+  event_beg: any;
+  event_end: any;
+  event_type: any;
+  asistentes: any;
   comment: any;
   commentData: any[] = [];
   comments: any[] = [];
+  eventExists:boolean = false;
 
   constructor(private route: ActivatedRoute, private httpService: HttpService, private storage: Storage) { }
 
@@ -49,6 +54,18 @@ export class PostPage implements OnInit {
       this.post_date = val.post[0].date;
       this.post_gallery = val.post[0].gallery;
       this.post_thumbnail = val.post[0].thumbnail;
+    });
+
+    await this.httpService.getEvent(this.post_title).then(val => {     
+      this.eventExists = true;
+      this.event_beg = "Desde " + val.event[0].beg_date;
+      this.event_end = "Hasta " + val.event[0].end_date;
+      this.event_type = val.event[0].type;
+
+      this.httpService.numberOfAssistants(val.event[0].id).then(val => {
+        this.asistentes = val.as[0]['count(*)'];
+        this.post_title = this.post_title + " (" + this.asistentes + " asistentes)"
+      });
     });
 
     await this.httpService.getPostComments(this.post_id).then(val => {

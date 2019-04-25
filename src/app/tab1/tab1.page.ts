@@ -3,6 +3,7 @@ import { Post } from '../pojo/post';
 import { HttpService } from '../services/http.service';
 import { ThumbContentPipe } from '../pipes/thumb-content.pipe';
 import { Router,ActivatedRoute } from '@angular/router';
+import { restoreView } from '@angular/core/src/render3';
 
 
 @Component({
@@ -11,13 +12,17 @@ import { Router,ActivatedRoute } from '@angular/router';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit{
-  posts: Post[];
+  posts: any[] = [];
 
   constructor(private httpService: HttpService, private thumbContent: ThumbContentPipe, private router: Router) {}
   
-  ngOnInit() {
-    this.httpService.getLastPosts().then(res => {
-      this.posts = res.post;
+  async ngOnInit() {
+    await this.httpService.getLastPosts().then(res => {      
+      res.post.forEach(element => {
+        if(element.scope == 0) {
+          this.posts.push(element);
+        }
+      });   
     })
   }    
 

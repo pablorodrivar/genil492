@@ -314,5 +314,113 @@ export class HttpService implements OnInit {
     }).catch(err => err);
     // END FETCH
   }
+
+  async post(postData: any) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/post/new";
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      },
+      body: JSON.stringify(
+        {
+          "title": postData[0],
+          "content": postData[1],
+          "date": new Date(),
+          "author": postData[4],
+          "event": postData[2],
+          "scope": postData[3],
+          "thumbnail": "null",
+          "gallery": "null"
+        }
+        )
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
+
+  async postEvent(eventData: any) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/event/new";
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      },
+      body: JSON.stringify(
+        {
+          "name": eventData[0],
+          "beg_date": eventData[1],
+          "end_date": eventData[2],
+          "type": eventData[3]
+        }
+        )
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
+
+  async numberOfAssistants(eventId: number) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/assistance/number/" + eventId;
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
+
+  async getEvent(name: string) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/event/name/" + name;
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
 }
 

@@ -74,7 +74,7 @@ export class Tab2Page implements OnInit {
       break;
     }
     if(this.navigate) {
-      this.router.navigate(['section/', id]);
+      this.router.navigate(['tab2/section/', id]);
     } else {
       this.presentToast();
     }

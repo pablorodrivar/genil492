@@ -12,10 +12,17 @@
 
 <ion-content>
   <img src="../../assets/forest1.jpg" class="post-img">
-  <ion-item><ion-label class="title">{{ post_title }}</ion-label></ion-item>  
+  <ion-item><ion-label class="title">{{ post_title }}</ion-label>
+    <ion-item class="tipo" lines="none" slot="end" *ngIf="event_type == 0" color="success">Excursion</ion-item>
+    <ion-item class="tipo" lines="none" slot="end" *ngIf="event_type == 1" color="success">Acampada</ion-item>
+    <ion-item class="tipo" lines="none" slot="end" *ngIf="event_type == 2" color="success">Campamento</ion-item>
+  </ion-item>  
   <ion-item lines="none"><ion-label slot="start">{{ post_date }}</ion-label><ion-label slot="end" style="text-align:end">{{ post_author }}</ion-label></ion-item>
-  
+
+  <ion-item *ngIf="eventExists" color="secondary" lines ="none"><ion-item lines="none" color="secondary" class="dates" slot="start">{{ event_beg }}</ion-item><ion-item class="dates" color="secondary" lines="none" slot="end">{{ event_end }}</ion-item></ion-item>
   <ion-item lines="none" style="margin-top:3%;"><ion-text>{{ post_content }}</ion-text></ion-item>
+
+  <ion-button color="primary" expand="full" style="margin-top: 3%;">Asistire</ion-button>  
 
   <ion-item><ion-label class="comments">Comentarios</ion-label></ion-item>
 
