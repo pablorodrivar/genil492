@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="showAlert()">
+        <ion-icon name="help-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
       Inicio
     </ion-title>
@@ -7,6 +12,15 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-item>
     <ion-label style="font-size: 20px;">Ultimas noticias</ion-label>
   </ion-item>
