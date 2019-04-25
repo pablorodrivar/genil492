@@ -17,9 +17,8 @@ export class LoginPage implements OnInit {
   }
 
   login() {        
-    this.authService.login(this.user, this.password).catch(() => {
-      this.presentToast();
-
+    this.authService.login(this.user, this.password).catch((err) => {
+        this.presentToast();
     });
   }
 

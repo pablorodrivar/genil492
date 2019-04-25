@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Publicar post</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="post-img">
+    <ion-icon name="camera" class="post-icon"></ion-icon>    
+  </div>
+  <ion-label class="post-img-lbl">Escoge una o varias imagenes</ion-label>
+
+  <ion-item>
+    <ion-label>Titulo</ion-label>
+    <ion-input placeholder="Titulo" [(ngModel)]="title"></ion-input>
+  </ion-item>  
+
+  <ion-item>
+    <ion-label lines="none">Contenido</ion-label>
+  </ion-item>
+  <ion-item>    
+    <ion-textarea placeholder="Contenido" rows="15" [(ngModel)]="content"></ion-textarea>
+  </ion-item>
+
+  <ion-list>
+      <ion-radio-group>
+        <ion-list-header>
+          <ion-label>Tipo de Post</ion-label>
+        </ion-list-header>
+    
+        <ion-item>
+          <ion-label>Post normal</ion-label>
+          <ion-radio slot="start" value="4" checked (ionSelect)="tipoPost(4)"></ion-radio>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>Excursion</ion-label>
+          <ion-radio slot="start" value="0" (ionSelect)="tipoPost(0)"></ion-radio>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>Acampada</ion-label>
+          <ion-radio slot="start" value="1" (ionSelect)="tipoPost(1)"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Campamento</ion-label>
+          <ion-radio slot="start" value="2" (ionSelect)="tipoPost(2)"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Otro</ion-label>
+          <ion-radio slot="start" value="3" (ionSelect)="tipoPost(3)"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+    <ion-item *ngIf="tipo < 4">
+      <ion-label>Fecha Inicio</ion-label>
+      <ion-datetime display-format="MMM DD, YYYY HH:mm" [(ngModel)]="dateBeg"></ion-datetime>
+    </ion-item>      
+    <ion-item *ngIf="tipo < 4">
+      <ion-label>Fecha Fin</ion-label>
+      <ion-datetime display-format="MMM DD, YYYY HH:mm" [(ngModel)]="dateEnd"></ion-datetime>
+    </ion-item>   
+
+    <ion-list>
+        <ion-radio-group>
+          <ion-list-header>
+            <ion-label>Publicar en</ion-label>
+          </ion-list-header>
+      
+          <ion-item>
+            <ion-label>Grupo</ion-label>
+            <ion-radio slot="start" value="0" checked (ionSelect)="scope(0)"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Seccion</ion-label>
+            <ion-radio slot="start" value="1" checked (ionSelect)="scope(1)"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+
+      <ion-item lines="none"><ion-button fill style="width:100%; border: solid 1px #ECEBEB;" (click)="post()">Publicar</ion-button></ion-item>  
+</ion-content>

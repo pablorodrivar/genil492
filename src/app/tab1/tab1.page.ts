@@ -24,4 +24,8 @@ export class Tab1Page implements OnInit{
   goToPost(id: number) {
     this.router.navigate(["/post",id]);
   }
+
+  addPost() {
+    this.router.navigate(["/add-post"]);
+  }
 }
