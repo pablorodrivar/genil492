@@ -15,9 +15,6 @@
 <ion-content>
   <ion-item lines="none">
     <ion-label class="title">Blog de la Seccion</ion-label>
-    <ion-item class="elbutton" lines="none" color="transparent">
-      <ion-label color="light" style="font-size: 17px;">Ir</ion-label>
-    </ion-item>
     <img *ngIf="section_id == 0" src="../../assets/castores.jpg" class="sec-img">
     <img *ngIf="section_id == 1" src="../../assets/lobatos.png" class="sec-img">
     <img *ngIf="section_id == 2" src="../../assets/troperos.jpg" class="sec-img">
@@ -25,16 +22,68 @@
     <img *ngIf="section_id == 4" src="../../assets/rovers.jpg" class="sec-img">
     <img *ngIf="section_id == 5" src="../../assets/kraal.jpg" class="sec-img">
   </ion-item>
-
-  <ion-item><ion-label>Informacion</ion-label></ion-item>
-  <ion-item lines="none"><ion-icon name="logo-whatsapp" slot="start"></ion-icon><ion-label>Whatsapp</ion-label></ion-item>
-  <ion-item lines="none"><ion-icon name="contacts" slot="start"></ion-icon><ion-label>Scouters</ion-label></ion-item>
-  <ion-item lines="none"><ion-icon name="hand" slot="start"></ion-icon>
-    <ion-label *ngIf="section_id == 0">Castores</ion-label>
-    <ion-label *ngIf="section_id == 1">Lobatos</ion-label>
-    <ion-label *ngIf="section_id == 2">Troperos</ion-label>
-    <ion-label *ngIf="section_id == 3">Ecultas</ion-label>
-    <ion-label *ngIf="section_id == 4">Rovers</ion-label>
-    <ion-label *ngIf="section_id == 5">Equipo</ion-label>
+  <ion-item>
+    <ion-label style="font-size: 20px;">Ultimas noticias</ion-label>
   </ion-item>
+  <ion-card *ngFor="let post of posts" (click)="goToPost(post.id)">
+    <ion-item *ngIf="post.section == 0" color="secondary">
+      <ion-item color="secondary" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+      <ion-item color="secondary" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+      <ion-item color="secondary" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+      <ion-item color="secondary" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+    </ion-item>    
+    <ion-item *ngIf="post.section == 1" color="primary">
+        <ion-item color="primary" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+        <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+        <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+        <ion-item color="primary" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+      </ion-item>
+      <ion-item *ngIf="post.section == 2" color="warning">
+        <ion-item color="warning" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+        <ion-item color="warning" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+        <ion-item color="warning" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+        <ion-item color="warning" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+      </ion-item>
+      <ion-item *ngIf="post.section == 3" color="success">
+        <ion-item color="success" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+        <ion-item color="success" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+        <ion-item color="success" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+        <ion-item color="success" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+      </ion-item>
+      <ion-item *ngIf="post.section == 4" color="unidad">
+        <ion-item color="unidad" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+        <ion-item color="unidad" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+        <ion-item color="unidad" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+        <ion-item color="unidad" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+      </ion-item>
+      <ion-item *ngIf="post.section == 5" color="danger">
+        <ion-item color="danger" style="color: white;" slot="start">{{ post.title }}</ion-item> 
+        <ion-item color="danger" slot="end" style="color: white;" *ngIf="post.event == 0">Excursion</ion-item> 
+        <ion-item color="danger" slot="end" style="color: white;" *ngIf="post.event == 1">Acampada</ion-item> 
+        <ion-item color="danger" slot="end" style="color: white;" *ngIf="post.event == 2">Campamento</ion-item> 
+      </ion-item>      
+    <ion-card-content>
+      <img class="thumbnail" src="../../assets/forest1.jpg">
+      <ion-item *ngIf="post.content.length > 100">{{ post.content.substring(0, 100) }}...</ion-item>
+      <ion-item *ngIf="post.content.length < 100">{{ post.content }}</ion-item>
+      <ion-item lines="none">
+        <ion-item slot="start" lines="none">{{ post.author }}</ion-item>
+        <ion-item slot="end" lines="none">{{ post.date }}</ion-item>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="chatbubbles"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="start">
+        <ion-fab-button><ion-icon name="mail"></ion-icon></ion-fab-button>
+        <ion-fab-button><ion-icon name="logo-whatsapp"></ion-icon></ion-fab-button>
+      </ion-fab-list>
+      <ion-fab-list side="top">
+        <ion-fab-button><ion-icon name="contacts"></ion-icon></ion-fab-button>
+        <ion-fab-button><ion-icon name="hand"></ion-icon></ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
 </ion-content> 

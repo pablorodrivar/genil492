@@ -23,3 +23,15 @@
     width: 100% !important;
     object-fit: cover;
 }
+
+.welcome-card ion-img {
+    max-height: 35vh;
+    overflow: hidden;
+  }
+  
+  .thumbnail {
+    height: 250px !important;
+    width: 100%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
