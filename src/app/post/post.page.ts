@@ -56,8 +56,11 @@ export class PostPage implements OnInit {
       this.post_thumbnail = val.post[0].thumbnail;
     });
 
-    await this.httpService.getEvent(this.post_title).then(val => {     
-      this.eventExists = true;
+    await this.httpService.getEvent(this.post_title).then(val => {      
+      console.log(val)
+      if(val !== "No existen eventos en la base de datos con ese nombre.") {
+        this.eventExists = true;
+      }        
       this.event_beg = "Desde " + val.event[0].beg_date;
       this.event_end = "Hasta " + val.event[0].end_date;
       this.event_type = val.event[0].type;
