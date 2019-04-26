@@ -38,6 +38,7 @@ export class PostPage implements OnInit {
   inputs: any[] = [];
   assData: any[] = [];
   checked: boolean;
+  list: string = "";
   repetido: boolean = false;
   eventExists:boolean = false;
   clickable: boolean = false;
@@ -79,18 +80,27 @@ export class PostPage implements OnInit {
       this.event_type = val.event[0].type;
 
       this.httpService.numberOfAssistants(val.event[0].id).then(val => {
-        this.asistentes = val.as[0]['count(*)'] +  " asistentes";
+        this.asistentes = "Asistentes: " + val.as[0]['count(*)'];
       });
     });
 
     await this.httpService.getPostComments(this.post_id).then(val => {
-      val.comment.forEach(element => {
-        this.comments.push(element);
-      });  
+      if(val.comment !== undefined){
+        val.comment.forEach(element => {
+          this.comments.push(element);
+        });
+      }        
     });
 
     await this.httpService.getAssistantsByEvent(this.event_id).then(ass => {
       this.event_assistants = ass.as;
+
+      this.event_assistants.forEach(element => {
+        this.httpService.getUserById(element.user).then(val => {
+          this.list = this.list + val.user[0].login + "\n";
+        });  
+      });
+      this.list = this.list.substr(9, this.list.length-3);
     });
 
     await this.httpService.getSons(this.user.id).then(val => {
@@ -139,6 +149,16 @@ export class PostPage implements OnInit {
     await alert.present();
   }
 
+  async showAss() {    
+    const alert = await this.alertController.create({
+      header: 'Asistentes',
+      message: this.list,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
   async sonAlert() {
     const alert = await this.alertController.create({
       header: '¿Quién asistirá?',
@@ -154,12 +174,14 @@ export class PostPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (val) => {
-            this.event_assistants.forEach(element => {
-              if(element.user == val[0]) {
-                this.repetido = true;
-                this.presentToast();
-              }
-            });  
+            if(this.event_assistants !== undefined){
+              this.event_assistants.forEach(element => {
+                if(element.user == val[0]) {
+                  this.repetido = true;
+                  this.presentToast();
+                }
+              });  
+            }
 
             console.log("repetido " + this.repetido)
 
