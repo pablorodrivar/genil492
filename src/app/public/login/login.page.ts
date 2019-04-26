@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './../../services/authentication.service';
 import { ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+
+const FIRST_REF = 'first-ref';
 
 @Component({
   selector: 'app-login',
@@ -11,13 +14,15 @@ export class LoginPage implements OnInit {
   public user: string;
   public password: string;
 
-  constructor(private authService: AuthenticationService, public toastController: ToastController) { }
+  constructor(private authService: AuthenticationService, public toastController: ToastController, public storage: Storage) { }
 
   ngOnInit() {
   }
 
   login() {        
-    this.authService.login(this.user, this.password).catch((err) => {
+    this.authService.login(this.user, this.password).then(() => {
+      this.storage.set(FIRST_REF, false);
+    }).catch((err) => {
         this.presentToast();
     });
   }

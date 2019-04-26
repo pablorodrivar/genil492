@@ -5,6 +5,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
 
 const USER_KEY = 'user-key';
+const FIRST_REF = 'first-ref';
 
 @Component({
   selector: 'app-tab1',
@@ -19,6 +20,13 @@ export class Tab1Page implements OnInit{
     private alertController: AlertController) {}
   
   async ngOnInit() {
+    await this.storage.get(FIRST_REF).then(val => {
+      if(!val) {
+        this.doRefresh(event);
+        this.storage.set(FIRST_REF, true);
+      }
+    });
+
     await this.storage.get(USER_KEY).then(val => {
       this.user = val;
     });
