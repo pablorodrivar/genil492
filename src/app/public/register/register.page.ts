@@ -4,6 +4,9 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { HttpService } from '../../services/http.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+
+const FIRST_REF = 'first-ref';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +32,8 @@ export class RegisterPage implements OnInit {
     private imagePicker: ImagePicker, 
     private httpService: HttpService,
     public toastController: ToastController,
-    public authService: AuthenticationService
+    public authService: AuthenticationService,
+    public storage: Storage
     ) { }
 
   ngOnInit() {
@@ -96,7 +100,8 @@ export class RegisterPage implements OnInit {
           if(res.status != 205) {
             this.userData.push(res.valid_email[0].role);
             this.httpService.postUser(this.userData).then(() => {
-              this.authService.login(this.userData[0], this.password).then(() => {                
+              this.authService.login(this.userData[0], this.password).then(() => {    
+                this.storage.set(FIRST_REF, false);       
               });
             });
 
