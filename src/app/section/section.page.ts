@@ -36,4 +36,8 @@ export class SectionPage implements OnInit {
     });
   }
 
+  goToPost(id: number) {
+    this.router.navigate(["/post",id]);
+  }
+
 }

@@ -94,6 +94,7 @@ export class RegisterPage implements OnInit {
       if(this.valid) {
         this.httpService.getEmail(this.email).then((res) => {
           if(res.status != 205) {
+            this.userData.push(res.valid_email[0].role);
             this.httpService.postUser(this.userData).then(() => {
               this.authService.login(this.userData[0], this.password).then(() => {                
               });

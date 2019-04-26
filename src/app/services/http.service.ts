@@ -118,7 +118,7 @@ export class HttpService implements OnInit {
           "name": userData[3],
           "surname": userData[4],
           "sign_up_date": new Date(),
-          "role": 3,
+          "role": userData[5],
           "photo": null
         }
         )

@@ -13,9 +13,9 @@
 <ion-content>
   <img src="../../assets/forest1.jpg" class="post-img">
   <ion-item><ion-label class="title">{{ post_title }}</ion-label>
-    <ion-item class="tipo" lines="none" slot="end" *ngIf="event_type == 0" color="success">Excursion</ion-item>
-    <ion-item class="tipo" lines="none" slot="end" *ngIf="event_type == 1" color="success">Acampada</ion-item>
-    <ion-item class="tipo" lines="none" slot="end" *ngIf="event_type == 2" color="success">Campamento</ion-item>
+    <ion-item lines="none" slot="end" *ngIf="event_type == 0">EXCURSION</ion-item>
+    <ion-item lines="none" slot="end" *ngIf="event_type == 1">ACAMPADA</ion-item>
+    <ion-item lines="none" slot="end" *ngIf="event_type == 2">CAMPAMENTO</ion-item>
   </ion-item>  
   <ion-item (click)=showAss()>{{ asistentes }}</ion-item>
   <ion-item lines="none"><ion-label slot="start">{{ post_date }}</ion-label><ion-label slot="end" style="text-align:end">{{ post_author }}</ion-label></ion-item>
