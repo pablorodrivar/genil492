@@ -26,6 +26,7 @@ export class RegisterPage implements OnInit {
   userData: string[] = [];
   errorMsg: string;
   valid: boolean = true;
+  valido: boolean = true;
  
   constructor(
     public alertController: AlertController, 
@@ -99,13 +100,14 @@ export class RegisterPage implements OnInit {
         this.httpService.getEmail(this.email).then((res) => {
           if(res.status != 205) {
             this.userData.push(res.valid_email[0].role);
+
+            //CHEKEAR EL EMAIL NO DUPLICADO EN EL PHP BACKEND
             this.httpService.postUser(this.userData).then(() => {
               this.authService.login(this.userData[0], this.password).then(() => {    
                 this.storage.set(FIRST_REF, false);       
               });
             });
-
-            this.errorMsg = "Usuario registrado."
+              this.errorMsg = "Usuario registrado."                        
           } else {
             this.errorMsg = "El email no figura en la base de datos. Por favor contacte con Pablo Scouter."
           }   
@@ -165,6 +167,19 @@ export class RegisterPage implements OnInit {
         break;
       }
     }    
+  }
+
+  async checkEmails(email: any) {
+    await this.httpService.getUsers().then(val => {      
+      console.log(val)
+      val.user.forEach(element => {
+        if(element.email == email) {
+          this.valido = false;
+        }
+      });
+    })
+    console.log(this.valido + " vALIDO")
+    return this.valido;
   }
 
   async presentToast() {
