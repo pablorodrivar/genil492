@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
 import { Storage } from '@ionic/storage';
-import { User } from '../pojo/user';
 import { HttpService } from '../services/http.service';
+import { AlertController } from '@ionic/angular';
 
 const USER_KEY = 'user-key';
 
@@ -16,7 +16,8 @@ export class Tab3Page implements OnInit{
   role: any;
   name: string;
 
-  constructor(private authService: AuthenticationService, private storage: Storage, private httpService: HttpService) {}
+  constructor(private authService: AuthenticationService, private storage: Storage, private httpService: HttpService,
+    private alertController: AlertController) {}
 
   async ngOnInit() {
     await this.storage.get(USER_KEY).then(val => {
@@ -28,6 +29,30 @@ export class Tab3Page implements OnInit{
         this.role = this.role.toUpperCase();
       });
     });    
+  }
+
+  async showAlert() {
+    const alert = await this.alertController.create({
+      header: 'Cerrar Sesion',
+      buttons: [
+        {
+          text: 'NO',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        },
+        {
+          text: 'SI',
+          handler: () => {
+            this.logout();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   logout() {
