@@ -583,5 +583,27 @@ export class HttpService implements OnInit {
     }).catch(err => err);
     // END FETCH
   }
+
+  async getUserByEmail(email: any) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/user/email/" + email;
+    let b64access = window.btoa(this.token);
+    // START FETCH
+    return fetch(url, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + b64access
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return res;
+      }
+    }).catch(err => err);
+    // END FETCH
+  }
 }
 

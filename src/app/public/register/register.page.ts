@@ -101,13 +101,31 @@ export class RegisterPage implements OnInit {
           if(res.status != 205) {
             this.userData.push(res.valid_email[0].role);
 
-            //CHEKEAR EL EMAIL NO DUPLICADO EN EL PHP BACKEND
-            this.httpService.postUser(this.userData).then(() => {
-              this.authService.login(this.userData[0], this.password).then(() => {    
-                this.storage.set(FIRST_REF, false);       
-              });
+            this.httpService.getUserByEmail(this.userData[2]).then(em => {
+              if(em.user[0].email !== this.userData[2]) {
+                this.httpService.postUser(this.userData).then(() => {
+                  this.authService.login(this.userData[0], this.password).then(() => {    
+                    this.storage.set(FIRST_REF, false);       
+                  });
+                  this.errorMsg = "Usuario registrado."
+                });                  
+              } else {
+                this.errorMsg = "Ese email ya esta en uso."
+              }
+            });  
+            
+            this.httpService.getUser(this.userData[0]).then(user => {
+              if(user.user[0].login !== this.userData[0]) {
+                this.httpService.postUser(this.userData).then(() => {
+                  this.authService.login(this.userData[0], this.password).then(() => {    
+                    this.storage.set(FIRST_REF, false);       
+                  });
+                  this.errorMsg = "Usuario registrado."
+                });  
+              } else {
+                this.errorMsg = "Ese nickname ya esta en uso."
+              }
             });
-              this.errorMsg = "Usuario registrado."                        
           } else {
             this.errorMsg = "El email no figura en la base de datos. Por favor contacte con Pablo Scouter."
           }   
