@@ -17,7 +17,7 @@
     <ion-item lines="none" slot="end" *ngIf="event_type == 1">ACAMPADA</ion-item>
     <ion-item lines="none" slot="end" *ngIf="event_type == 2">CAMPAMENTO</ion-item>
   </ion-item>  
-  <ion-item (click)=showAss()>{{ asistentes }}</ion-item>
+  <ion-item *ngIf="eventExists"><ion-label (click)=showAss()>{{ asistentes }}</ion-label><ion-button *ngIf="asistira" (click)="eraseAss()" slot="end" color="danger">NO ASISTO</ion-button></ion-item>
   <ion-item lines="none"><ion-label slot="start">{{ post_date }}</ion-label><ion-label slot="end" style="text-align:end">{{ post_author }}</ion-label></ion-item>
 
   <ion-item *ngIf="eventExists" color="secondary" lines ="none"><ion-item lines="none" color="secondary" class="dates" slot="start">{{ event_beg }}</ion-item><ion-item class="dates" color="secondary" lines="none" slot="end">{{ event_end }}</ion-item></ion-item>

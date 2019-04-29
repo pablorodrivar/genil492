@@ -4,6 +4,7 @@ import { HttpService } from '../services/http.service';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { userInfo } from 'os';
 
 const USER_KEY = 'user-key';
 
@@ -42,6 +43,7 @@ export class PostPage implements OnInit {
   repetido: boolean = false;
   eventExists:boolean = false;
   clickable: boolean = false;
+  asistira: boolean = false;
 
   constructor(private route: ActivatedRoute, private httpService: HttpService, private storage: Storage,
     private alertController: AlertController, private toastController: ToastController) { }
@@ -98,6 +100,9 @@ export class PostPage implements OnInit {
       this.event_assistants.forEach(element => {
         this.httpService.getUserById(element.user).then(val => {
           this.list = this.list + val.user[0].login + "\n";
+          if(val.user[0].id == this.user.id) {
+            this.asistira = true;
+          }
         });  
       });
       this.list = this.list.substr(9, this.list.length-3);
@@ -208,6 +213,51 @@ export class PostPage implements OnInit {
     await alert.present();
   }
 
+  async eraseAlert() {
+    const alert = await this.alertController.create({
+      header: '¿Quién no asistirá?',
+      inputs: this.inputs,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (val) => {
+            /*if(this.event_assistants !== undefined){
+              this.event_assistants.forEach(element => {
+                if(element.user == val[0]) {
+                  this.repetido = true;
+                  this.presentToast();
+                }
+              });  
+            }
+
+            console.log("repetido " + this.repetido)*/
+
+            //if(!this.repetido) {
+              //this.repetido = false;
+              val.forEach(element => {
+                this.httpService.deleteAssistance(element).then(res => {
+                  console.log(res)
+                });
+                this.assData = [];
+                this.presentToastEr();
+              });
+              this.doRefresh();              
+            //}
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   doRefresh() {
     setTimeout(() => {
       this.asistentes = [];
@@ -218,7 +268,7 @@ export class PostPage implements OnInit {
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: 'Ese usuario ya va está en la lista de asistencia.',
+      message: 'Ese usuario ya está en la lista de asistencia.',
       duration: 2000
     });
     toast.present();
@@ -230,6 +280,18 @@ export class PostPage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  async presentToastEr() {
+    const toast = await this.toastController.create({
+      message: 'Borrado(s) de la lista de asistencia.',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  eraseAss() {
+    this.eraseAlert();
   }
 
   asistir() {
