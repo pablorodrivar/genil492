@@ -650,8 +650,8 @@ export class HttpService implements OnInit {
     // END FETCH
   }
 
-  async deleteAssistance(id: any) {
-    let url = "https://genil-api-v3-puvlo.c9users.io/public/assistance/user/" + id;
+  async deleteAssistance(id: any, event: any) {
+    let url = "https://genil-api-v3-puvlo.c9users.io/public/assistance/user/" + id + "/event/" + event;
     let b64access = window.btoa(this.token);
     // START FETCH
     return fetch(url, {

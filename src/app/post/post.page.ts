@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ɵConsole } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { HttpService } from '../services/http.service';
 import { Storage } from '@ionic/storage';
@@ -132,6 +132,8 @@ export class PostPage implements OnInit {
         "value": this.user.id
       });
     });
+
+    await this.checkClickable();
   }
 
   sendComment() {
@@ -242,7 +244,7 @@ export class PostPage implements OnInit {
             //if(!this.repetido) {
               //this.repetido = false;
               val.forEach(element => {
-                this.httpService.deleteAssistance(element).then(res => {
+                this.httpService.deleteAssistance(element, this.event_id).then(res => {
                   console.log(res)
                 });
                 this.assData = [];
@@ -294,57 +296,66 @@ export class PostPage implements OnInit {
     this.eraseAlert();
   }
 
-  asistir() {
+  checkClickable() {
     if((this.user.role >= 6 && this.user.role <= 10) || this.user.role == 0) {
       this.clickable = true;
     } else {
+      console.log(this.post_section)
       switch(this.post_section) {
-        case 0:
+        case 0: {
           this.clickable = true;
-        break;
+          break;
+        }          
   
-        case 1:
-          if(this.user.role == 1) {
+        case 1: {
+          if(this.user.role == 1 || this.user.role == 6) {
             this.clickable = true;
           } else {
             this.clickable = false;
           }
-        break;
+          break;
+        }          
   
-        case 2:
-          if(this.user.role == 2) {
+        case 2: {
+          if(this.user.role == 2 || this.user.role == 7) {
             this.clickable = true;
           } else {
             this.clickable = false;
           }
-        break;
+          break;
+        }          
 
-        case 3:
-          if(this.user.role == 3) {
+        case 3: {
+          if(this.user.role == 3 || this.user.role == 8) {
             this.clickable = true;
           } else {
             this.clickable = false;
           }
-        break;
+          break;
+        }          
 
-        case 4:
+        case 4: {
           if(this.user.role == 4 || this.user.role == 13) {
             this.clickable = true;
           } else {
             this.clickable = false;
           }
-        break;
+          break;
+        }          
 
-        case 5:
+        case 5: {
           if(this.user.role == 5 || this.user.role == 14) {
             this.clickable = true;
           } else {
             this.clickable = false;
           }
-        break;
+          break;
+        }          
       }
     }
+  }
 
+  asistir() {    
     if(!this.clickable) {
       this.showAlert();
     } else {
