@@ -4,7 +4,6 @@ import { HttpService } from '../services/http.service';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
-import { userInfo } from 'os';
 
 const USER_KEY = 'user-key';
 
@@ -22,7 +21,7 @@ export class PostPage implements OnInit {
   post_date: any;
   post_gallery: any;
   post_thumbnail: any;
-  post_section: any;
+  post_section: number;
   user: any;
   login: any;
   role: any;
@@ -95,20 +94,23 @@ export class PostPage implements OnInit {
     });
 
     await this.httpService.getAssistantsByEvent(this.event_id).then(ass => {
-      this.event_assistants = ass.as;
+      if(ass.indexOf('No existen ass en la base de datos con ese ID.') < 0){
+        this.event_assistants = ass.as;
 
-      this.event_assistants.forEach(element => {
-        this.httpService.getUserById(element.user).then(val => {
-          this.list = this.list + val.user[0].login + "\n";
-          if(val.user[0].id == this.user.id) {
-            this.asistira = true;
-          }
-        });  
-      });
-      this.list = this.list.substr(9, this.list.length-3);
+        this.event_assistants.forEach(element => {
+          this.httpService.getUserById(element.user).then(val => {
+            this.list = this.list + val.user[0].login + "\n";
+            if(val.user[0].id == this.user.id) {
+              this.asistira = true;
+            }
+          });  
+        });
+        this.list = this.list.substr(9, this.list.length-3);
+      }      
     });
 
     await this.httpService.getSons(this.user.id).then(val => {
+      console.log(val)
       val.son.forEach(element => {
         this.sons.push(element.son);
       });
@@ -123,17 +125,19 @@ export class PostPage implements OnInit {
             "value": name.user[0].id
           });
         });
-      });
-
+      }); 
+      
       this.inputs.push({
         "name": "Yo",
         "type": "checkbox",
         "label": "Yo",
         "value": this.user.id
       });
-    });
+    });    
 
-    await this.checkClickable();
+    console.log(this.inputs)
+
+    //await this.checkClickable();
   }
 
   sendComment() {
@@ -297,18 +301,61 @@ export class PostPage implements OnInit {
   }
 
   checkClickable() {
+    console.log("POST: " + this.post_section + "ROL: " + this.user.role)
     if((this.user.role >= 6 && this.user.role <= 10) || this.user.role == 0) {
       this.clickable = true;
     } else {
-      console.log(this.post_section)
-      switch(this.post_section) {
+      console.log(this.post_section + " ROL: " + this.user.role)
+      if(this.post_section == 0) {
+        console.log("HEY")
+        this.clickable = true;
+      } else if(this.post_section == 1) {
+        console.log("HEY")
+        if(this.user.role == 1 || this.user.role == 6) {
+          this.clickable = true;
+        } else {
+          this.clickable = false;
+        }
+      } else if(this.post_section == 2) {
+        console.log("HEY")
+        if(this.user.role == 2 || this.user.role == 7) {
+          this.clickable = true;
+        } else {
+          this.clickable = false;
+        }
+      } else if(this.post_section == 3) {
+        console.log("HEY")
+        if(this.user.role == 3 || this.user.role == 8) {
+          this.clickable = true;
+        } else {
+          this.clickable = false;
+        }
+      } else if(this.post_section == 4) {
+        console.log("HEY")
+        if(this.user.role == 4 || this.user.role == 13) {
+          this.clickable = true;
+        } else {
+          this.clickable = false;
+        }
+      } else if(this.post_section == 5) {
+        console.log("HEY")
+        if(this.user.role == 5 || this.user.role == 14) {
+          this.clickable = true;
+        } else {
+          this.clickable = false;
+        }
+      }
+    }
+
+      /*switch(this.post_section) {
         case 0: {
+          console.log(this.user.role + "HEEEEY")
           this.clickable = true;
           break;
         }          
   
-        case 1: {
-          if(this.user.role == 1 || this.user.role == 6) {
+        case 1: {       
+          if(this.user.role === 1 || this.user.role === 6) {
             this.clickable = true;
           } else {
             this.clickable = false;
@@ -351,11 +398,12 @@ export class PostPage implements OnInit {
           }
           break;
         }          
-      }
-    }
+      }*/
+    
   }
 
-  asistir() {    
+  async asistir() {    
+    await this.checkClickable();
     if(!this.clickable) {
       this.showAlert();
     } else {
