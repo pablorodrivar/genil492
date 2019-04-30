@@ -87,4 +87,10 @@ export class Tab2Page implements OnInit {
     });
     toast.present();
   }
+
+  goTo(option: string) {
+    if(option == 'cancionero') {
+      this.router.navigate(['/cancionero']);
+    }
+  }
 }

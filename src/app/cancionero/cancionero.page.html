@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cancionero</ion-title>     
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar placeholder="Buscar cancion..." animated (ionChange)="searchSong($event)"></ion-searchbar>   
+  <ion-item lines="none">
+    <ion-chip color="secondary" style="font-size: 10px;">Grupo</ion-chip>
+    <ion-chip color="primary" style="font-size: 10px;">Colonia</ion-chip>
+    <ion-chip color="warning" style="font-size: 10px;">Manada</ion-chip>
+    <ion-chip color="success" style="font-size: 10px;">Tropa</ion-chip>
+    <ion-chip color="tertiary" style="font-size: 10px;">Unidad</ion-chip>
+    <ion-chip color="danger" style="font-size: 10px;">Clan</ion-chip>
+  </ion-item>
+  <ion-list>
+    <ion-item *ngFor="let song of songs | filter:searchText">
+      <ion-label>{{ song.title }}</ion-label>
+      <ion-chip *ngIf="song.section == 0" color="secondary">Grupo</ion-chip>
+      <ion-chip *ngIf="song.section == 1" color="primary">Colonia</ion-chip>
+      <ion-chip *ngIf="song.section == 2" color="warning">Manada</ion-chip>
+      <ion-chip *ngIf="song.section == 3" color="success">Tropa</ion-chip>
+      <ion-chip *ngIf="song.section == 4" color="tertiary">Unidad</ion-chip>
+      <ion-chip *ngIf="song.section == 5" color="danger">Clan</ion-chip>
+    </ion-item>
+  </ion-list>
+</ion-content>

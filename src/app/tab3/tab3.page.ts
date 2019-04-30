@@ -17,6 +17,7 @@ export class Tab3Page implements OnInit{
   name: string;
   ass: any[] = [];
   events: any[] = [];
+  sons: any[] = [];
 
   constructor(private authService: AuthenticationService, private storage: Storage, private httpService: HttpService,
     private alertController: AlertController,) {}
@@ -27,6 +28,7 @@ export class Tab3Page implements OnInit{
       this.name = this.user.login;
       
       this.httpService.getRole(this.user.role).then(val => {
+        console.log(val)
         this.role = val.role[0].name;
         this.role = this.role.toUpperCase();
       });
@@ -40,9 +42,14 @@ export class Tab3Page implements OnInit{
           this.events.push(event.event[0]);
         });
       });
-
-      console.log(this.events)
     });
+
+    await this.httpService.getSons(this.user.id).then(val => {
+      console.log(val)
+      val.son.forEach(element => {
+        this.sons.push(element.son);
+      });
+    });  
   }
 
   async showAlert() {

@@ -16,7 +16,8 @@ const routes: Routes = [
   },
   { path: 'post', loadChildren: './post/post.module#PostPageModule' },
   { path: 'section', loadChildren: './section/section.module#SectionPageModule' },
-  { path: 'add-post', loadChildren: './add-post/add-post.module#AddPostPageModule' }
+  { path: 'add-post', loadChildren: './add-post/add-post.module#AddPostPageModule' },  { path: 'cancionero', loadChildren: './cancionero/cancionero.module#CancioneroPageModule' }
+
 
 
 ];
