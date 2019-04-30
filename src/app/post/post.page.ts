@@ -94,7 +94,8 @@ export class PostPage implements OnInit {
     });
 
     await this.httpService.getAssistantsByEvent(this.event_id).then(ass => {
-      if(ass.indexOf('No existen ass en la base de datos con ese ID.') < 0){
+      console.log(typeof ass)
+      if(typeof ass !== 'string'){
         this.event_assistants = ass.as;
 
         this.event_assistants.forEach(element => {
@@ -234,19 +235,6 @@ export class PostPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (val) => {
-            /*if(this.event_assistants !== undefined){
-              this.event_assistants.forEach(element => {
-                if(element.user == val[0]) {
-                  this.repetido = true;
-                  this.presentToast();
-                }
-              });  
-            }
-
-            console.log("repetido " + this.repetido)*/
-
-            //if(!this.repetido) {
-              //this.repetido = false;
               val.forEach(element => {
                 this.httpService.deleteAssistance(element, this.event_id).then(res => {
                   console.log(res)
@@ -254,8 +242,7 @@ export class PostPage implements OnInit {
                 this.assData = [];
                 this.presentToastEr();
               });
-              this.doRefresh();              
-            //}
+              this.doRefresh();   
           }
         }
       ]
@@ -346,60 +333,6 @@ export class PostPage implements OnInit {
         }
       }
     }
-
-      /*switch(this.post_section) {
-        case 0: {
-          console.log(this.user.role + "HEEEEY")
-          this.clickable = true;
-          break;
-        }          
-  
-        case 1: {       
-          if(this.user.role === 1 || this.user.role === 6) {
-            this.clickable = true;
-          } else {
-            this.clickable = false;
-          }
-          break;
-        }          
-  
-        case 2: {
-          if(this.user.role == 2 || this.user.role == 7) {
-            this.clickable = true;
-          } else {
-            this.clickable = false;
-          }
-          break;
-        }          
-
-        case 3: {
-          if(this.user.role == 3 || this.user.role == 8) {
-            this.clickable = true;
-          } else {
-            this.clickable = false;
-          }
-          break;
-        }          
-
-        case 4: {
-          if(this.user.role == 4 || this.user.role == 13) {
-            this.clickable = true;
-          } else {
-            this.clickable = false;
-          }
-          break;
-        }          
-
-        case 5: {
-          if(this.user.role == 5 || this.user.role == 14) {
-            this.clickable = true;
-          } else {
-            this.clickable = false;
-          }
-          break;
-        }          
-      }*/
-    
   }
 
   async asistir() {    
