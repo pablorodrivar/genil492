@@ -51,10 +51,16 @@
               </ion-item>              
           </ion-card-header>
           <ion-card-content>
+            <ion-item *ngIf="ev.type == 0" lines="none" style="--ion-background-color: #0cd1e8;"><div class="separator">Grupo</div></ion-item>
+            <ion-item *ngIf="ev.type == 1" lines="none" style="--ion-background-color: #3880ff;"><div class="separator">Colonia</div></ion-item>
+            <ion-item *ngIf="ev.type == 2" lines="none" style="--ion-background-color: #ffce00;"><div class="separator">Manada</div></ion-item>
+            <ion-item *ngIf="ev.type == 3" lines="none" style="--ion-background-color: #10dc60;"><div class="separator">Tropa</div></ion-item>
+            <ion-item *ngIf="ev.type == 4" lines="none" style="--ion-background-color: #f04141;"><div class="separator">Unidad</div></ion-item>
+            <ion-item *ngIf="ev.type == 5" lines="none" style="--ion-background-color: #d30f0f;"><div class="separator">Clan</div></ion-item>
             <ion-item lines="none">
-              <ion-item lines="none" slot="start">{{ ev.beg_date }}</ion-item>
-              <ion-item lines="none" slot="end">{{ ev.end_date }}</ion-item>
-            </ion-item>            
+              <ion-item slot="start" style="font-size: 14px;">Inicio: {{ ev.beg_date }}</ion-item>
+              <ion-item slot="end" style="font-size: 14px;">Fin: {{ ev.end_date }}</ion-item>
+            </ion-item>    
           </ion-card-content>
       </ion-card>
     </ion-list>

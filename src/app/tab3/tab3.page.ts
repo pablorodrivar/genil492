@@ -3,7 +3,6 @@ import { AuthenticationService } from '../services/authentication.service';
 import { Storage } from '@ionic/storage';
 import { HttpService } from '../services/http.service';
 import { AlertController } from '@ionic/angular';
-import { element } from '@angular/core/src/render3';
 
 const USER_KEY = 'user-key';
 
@@ -20,7 +19,7 @@ export class Tab3Page implements OnInit{
   events: any[] = [];
 
   constructor(private authService: AuthenticationService, private storage: Storage, private httpService: HttpService,
-    private alertController: AlertController) {}
+    private alertController: AlertController,) {}
 
   async ngOnInit() {
     await this.storage.get(USER_KEY).then(val => {
