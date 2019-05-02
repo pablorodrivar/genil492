@@ -3,6 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button><ion-icon name="musical-notes"></ion-icon></ion-button>
+    </ion-buttons>
     <ion-title>Cancionero</ion-title>     
   </ion-toolbar>
 </ion-header>
@@ -18,7 +21,7 @@
     <ion-chip color="danger" style="font-size: 10px;">Clan</ion-chip>
   </ion-item>
   <ion-list>
-    <ion-item *ngFor="let song of songs | filter:searchText">
+    <ion-item *ngFor="let song of songs | filter:searchText" (click)="openSong(song.path)">
       <ion-label>{{ song.title }}</ion-label>
       <ion-chip *ngIf="song.section == 0" color="secondary">Grupo</ion-chip>
       <ion-chip *ngIf="song.section == 1" color="primary">Colonia</ion-chip>

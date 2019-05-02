@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "140919541964",
+    "firebase_url": "https://grupo-scout-genil.firebaseio.com",
+    "project_id": "grupo-scout-genil",
+    "storage_bucket": "grupo-scout-genil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140919541964:android:47bd459af1c19bdb",
+        "android_client_info": {
+          "package_name": "genil.n492"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140919541964-jitjahd5epijvnrc4m4rhjcq288qauus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrbKR30oxZMPB9Wv5jMKXkScSyNQu5pmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "140919541964-jitjahd5epijvnrc4m4rhjcq288qauus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

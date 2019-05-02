@@ -277,6 +277,8 @@ dependencies {
     implementation "com.google.firebase:firebase-messaging:+"
     implementation "com.google.firebase:firebase-config:+"
     implementation "com.google.firebase:firebase-perf:+"
+    implementation "com.android.support:support-v4:27.+"
+    implementation "com.android.support:support-v4:27+"
     // SUB-PROJECT DEPENDENCIES END
 }
 

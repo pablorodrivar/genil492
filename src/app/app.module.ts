@@ -13,6 +13,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { ThumbContentPipe } from './pipes/thumb-content.pipe';
 
+import { File } from '@ionic-native/File/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+
 @NgModule({
   declarations: [AppComponent, ThumbContentPipe],
   entryComponents: [],
@@ -27,6 +32,10 @@ import { ThumbContentPipe } from './pipes/thumb-content.pipe';
     StatusBar,    
     SplashScreen,
     ImagePicker,
+    File,
+    FileOpener,
+    FileTransfer,
+    DocumentViewer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ThumbContentPipe
   ],
