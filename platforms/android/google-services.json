@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:140919541964:android:47bd459af1c19bdb",
         "android_client_info": {
-          "package_name": "genil.n492"
+          "package_name": "io.ionic.starter"
         }
       },
       "oauth_client": [

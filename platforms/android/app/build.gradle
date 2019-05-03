@@ -27,7 +27,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:3.4.0'
     }
 }
 
@@ -169,6 +169,7 @@ android {
     defaultConfig {
         versionCode cdvVersionCode ?: new BigInteger("" + privateHelpers.extractIntFromManifest("versionCode"))
         applicationId privateHelpers.extractStringFromManifest("package")
+        minSdkVersion 19
 
         if (cdvMinSdkVersion != null) {
             minSdkVersion cdvMinSdkVersion
@@ -341,3 +342,5 @@ for (def func : cdvPluginPostBuildExtras) {
 if (hasProperty('postBuildExtras')) {
     postBuildExtras()
 }
+
+apply plugin: 'com.google.gms.google-services'
