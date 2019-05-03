@@ -5,6 +5,7 @@ import { File } from '@ionic-native/File/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-cancionero',
@@ -17,9 +18,10 @@ export class CancioneroPage implements OnInit {
   searchText = '';
 
   constructor(private httpService: HttpService, private platform: Platform, private file: File, private ft: FileTransfer, 
-    private fileOpener: FileOpener, private document: DocumentViewer,) { }
+    private fileOpener: FileOpener, private document: DocumentViewer, public loadingController: LoadingController) { }
 
   ngOnInit() {
+    this.presentLoading();
     this.httpService.getSongs().then(val => {
       this.songs = val.song;
     });
@@ -47,5 +49,12 @@ export class CancioneroPage implements OnInit {
       }
       this.document.viewDocument(`${filePath}/5-tools.pdf`, 'application/pdf', options);
     }
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      duration: 1000
+    });
+    await loading.present();
   }
 }

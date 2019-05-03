@@ -3,6 +3,7 @@ import { HttpService } from '../services/http.service';
 import { AlertController } from '@ionic/angular';
 import { Router,ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { LoadingController } from '@ionic/angular';
 
 const USER_KEY = 'user-key';
 const FIRST_REF = 'first-ref';
@@ -17,9 +18,10 @@ export class Tab1Page implements OnInit{
   user: any;
 
   constructor(private httpService: HttpService, private router: Router, private storage: Storage,
-    private alertController: AlertController) {}
+    private alertController: AlertController, public loadingController: LoadingController) {}
   
   async ngOnInit() {
+    this.presentLoading();
     await this.storage.get(FIRST_REF).then(val => {
       if(!val) {
         this.doRefresh(event);
@@ -65,5 +67,12 @@ export class Tab1Page implements OnInit{
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);    
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      duration: 1000
+    });
+    await loading.present();
   }
 }

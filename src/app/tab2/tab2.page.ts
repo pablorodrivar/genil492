@@ -91,6 +91,8 @@ export class Tab2Page implements OnInit {
   goTo(option: string) {
     if(option == 'cancionero') {
       this.router.navigate(['/cancionero']);
+    } else if (option == 'intendance') {
+      this.router.navigate(['/intendance']);
     }
   }
 }

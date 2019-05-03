@@ -4,6 +4,7 @@ import { HttpService } from '../services/http.service';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 
 const USER_KEY = 'user-key';
 
@@ -45,9 +46,10 @@ export class PostPage implements OnInit {
   asistira: boolean = false;
 
   constructor(private route: ActivatedRoute, private httpService: HttpService, private storage: Storage,
-    private alertController: AlertController, private toastController: ToastController) { }
+    private alertController: AlertController, private toastController: ToastController, public loadingController: LoadingController,) { }
 
   async ngOnInit() {
+    this.presentLoading();
     this.post_id = this.route.snapshot.paramMap.get('id');
 
     await this.storage.get(USER_KEY).then(val => {
@@ -238,6 +240,7 @@ export class PostPage implements OnInit {
               val.forEach(element => {
                 this.httpService.deleteAssistance(element, this.event_id).then(res => {
                   console.log(res)
+                  this.inputs = [];
                 });
                 this.assData = [];
                 this.presentToastEr();
@@ -343,4 +346,11 @@ export class PostPage implements OnInit {
       this.sonAlert();
     }
   }    
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      duration: 1000
+    });
+    await loading.present();
+  }
 }
