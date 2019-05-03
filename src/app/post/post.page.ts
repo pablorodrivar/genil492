@@ -44,6 +44,7 @@ export class PostPage implements OnInit {
   eventExists:boolean = false;
   clickable: boolean = false;
   asistira: boolean = false;
+  clickable_ass: boolean = true;
 
   constructor(private route: ActivatedRoute, private httpService: HttpService, private storage: Storage,
     private alertController: AlertController, private toastController: ToastController, public loadingController: LoadingController,) { }
@@ -163,14 +164,16 @@ export class PostPage implements OnInit {
     await alert.present();
   }
 
-  async showAss() {    
-    const alert = await this.alertController.create({
-      header: 'Asistentes',
-      message: this.list,
-      buttons: ['OK']
-    });
-
-    await alert.present();
+  async showAss() { 
+    if(this.clickable_ass){
+      const alert = await this.alertController.create({
+        header: 'Asistentes',
+        message: this.list,
+        buttons: ['OK']
+      });
+  
+      await alert.present();
+    }       
   }
 
   async sonAlert() {
@@ -210,6 +213,7 @@ export class PostPage implements OnInit {
                 });                             
                 this.repetido = false;
                 this.assData = [];
+                this.inputs = [];
                 this.presentToastSucc();
               });
               this.doRefresh();              
@@ -237,10 +241,11 @@ export class PostPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (val) => {
+            this.asistira = false;
+            this.clickable_ass = false;
               val.forEach(element => {
                 this.httpService.deleteAssistance(element, this.event_id).then(res => {
                   console.log(res)
-                  this.inputs = [];
                 });
                 this.assData = [];
                 this.presentToastEr();
@@ -259,6 +264,14 @@ export class PostPage implements OnInit {
       this.asistentes = [];
       this.ngOnInit();
       console.log('Async operation has ended');
+    }, 2000);    
+  }
+
+  doRef(event) {
+    setTimeout(() => {
+      this.ngOnInit();
+      console.log('Async operation has ended');
+      event.target.complete();
     }, 2000);    
   }
 

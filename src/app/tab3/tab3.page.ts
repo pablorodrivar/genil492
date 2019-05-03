@@ -3,6 +3,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { Storage } from '@ionic/storage';
 import { HttpService } from '../services/http.service';
 import { AlertController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 
 const USER_KEY = 'user-key';
 
@@ -20,9 +21,10 @@ export class Tab3Page implements OnInit{
   sons: any[] = [];
 
   constructor(private authService: AuthenticationService, private storage: Storage, private httpService: HttpService,
-    private alertController: AlertController,) {}
+    private alertController: AlertController, public loadingController: LoadingController) {}
 
   async ngOnInit() {
+    this.presentLoading();
     await this.storage.get(USER_KEY).then(val => {
       this.user = val;
       this.name = this.user.login;
@@ -55,6 +57,7 @@ export class Tab3Page implements OnInit{
   async showAlert() {
     const alert = await this.alertController.create({
       header: 'Cerrar Sesion',
+      message: 'Seguro que quiere cerrar sesion?',
       buttons: [
         {
           text: 'NO',
@@ -78,5 +81,12 @@ export class Tab3Page implements OnInit{
 
   logout() {
     this.authService.logout();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      duration: 1000
+    });
+    await loading.present();
   }
 }

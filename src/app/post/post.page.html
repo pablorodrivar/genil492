@@ -11,6 +11,15 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRef($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
+
   <img src="../../assets/forest1.jpg" class="post-img">
   <ion-item><ion-label class="title">{{ post_title }}</ion-label>
     <ion-chip *ngIf="event_type == 0"><ion-icon name="analytics" color="light"></ion-icon><ion-label color="light">Excursion</ion-label></ion-chip>   
