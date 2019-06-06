@@ -16,25 +16,26 @@
 
 #import <Foundation/Foundation.h>
 
+#import "FIRCoreSwiftNameSupport.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  * This class provides constant fields of Google APIs.
  */
-NS_SWIFT_NAME(FirebaseOptions)
-@interface FIROptions : NSObject <NSCopying>
+FIR_SWIFT_NAME(FirebaseOptions)
+@interface FIROptions : NSObject<NSCopying>
 
 /**
- * Returns the default options. The first time this is called it synchronously reads
- * GoogleService-Info.plist from disk.
+ * Returns the default options.
  */
-+ (nullable FIROptions *)defaultOptions NS_SWIFT_NAME(defaultOptions());
++ (nullable FIROptions *)defaultOptions FIR_SWIFT_NAME(defaultOptions());
 
 /**
  * An iOS API key used for authenticating requests from your app, e.g.
  * @"AIzaSyDdVgKwhZl0sTTTLZ7iTmt1r3N2cJLnaDk", used to identify your app to Google servers.
  */
-@property(nonatomic, copy, nullable) NSString *APIKey NS_SWIFT_NAME(apiKey);
+@property(nonatomic, copy, nullable) NSString *APIKey FIR_SWIFT_NAME(apiKey);
 
 /**
  * The bundle ID for the application. Defaults to `[[NSBundle mainBundle] bundleID]` when not set
@@ -57,7 +58,7 @@ NS_SWIFT_NAME(FirebaseOptions)
  * The Project Number from the Google Developer's console, for example @"012345678901", used to
  * configure Google Cloud Messaging.
  */
-@property(nonatomic, copy) NSString *GCMSenderID NS_SWIFT_NAME(gcmSenderID);
+@property(nonatomic, copy) NSString *GCMSenderID FIR_SWIFT_NAME(gcmSenderID);
 
 /**
  * The Project ID from the Firebase console, for example @"abc-xyz-123".
@@ -91,8 +92,24 @@ NS_SWIFT_NAME(FirebaseOptions)
 @property(nonatomic, copy, nullable) NSString *storageBucket;
 
 /**
- * Initializes a customized instance of FIROptions from the file at the given plist file path. This
- * will read the file synchronously from disk.
+ * Initializes a customized instance of FIROptions with keys. googleAppID, bundleID and GCMSenderID
+ * are required. Other keys may required for configuring specific services.
+ */
+- (instancetype)initWithGoogleAppID:(NSString *)googleAppID
+                           bundleID:(NSString *)bundleID
+                        GCMSenderID:(NSString *)GCMSenderID
+                             APIKey:(NSString *)APIKey
+                           clientID:(NSString *)clientID
+                         trackingID:(NSString *)trackingID
+                    androidClientID:(NSString *)androidClientID
+                        databaseURL:(NSString *)databaseURL
+                      storageBucket:(NSString *)storageBucket
+                  deepLinkURLScheme:(NSString *)deepLinkURLScheme
+    DEPRECATED_MSG_ATTRIBUTE("Use `-[FIROptions initWithGoogleAppID:gcmSenderID:]` and "
+                             "properties instead.");
+
+/**
+ * Initializes a customized instance of FIROptions from the file at the given plist file path.
  * For example,
  * NSString *filePath =
  *     [[NSBundle mainBundle] pathForResource:@"GoogleService-Info" ofType:@"plist"];
@@ -105,11 +122,9 @@ NS_SWIFT_NAME(FirebaseOptions)
  * Initializes a customized instance of FIROptions with required fields. Use the mutable properties
  * to modify fields for configuring specific services.
  */
-// clang-format off
 - (instancetype)initWithGoogleAppID:(NSString *)googleAppID
                         GCMSenderID:(NSString *)GCMSenderID
-    NS_SWIFT_NAME(init(googleAppID:gcmSenderID:));
-// clang-format on
+    FIR_SWIFT_NAME(init(googleAppID:gcmSenderID:));
 
 @end
 

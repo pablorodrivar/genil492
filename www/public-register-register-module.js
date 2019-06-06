@@ -58,7 +58,7 @@ var RegisterPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button defaultHref=\"/login\"></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"showAlert()\">\r\n        <ion-icon name=\"help-circle-outline\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n    <ion-title>Registro</ion-title>    \r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <ion-item lines=\"none\" class=\"user-head\">\r\n      <img class=\"circle-pic\" src=\"../../../assets/avatar.png\" />\r\n  </ion-item>    \r\n  <ion-item style=\"margin-left: auto;margin-right: auto;\" lines=\"none\">\r\n    <ion-button block clear class=\"button-no-background\" color=\"transparent\" (click)=\"getImage()\">Cambiar avatar</ion-button>\r\n  </ion-item>\r\n\r\n  <!-- Nickname -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Nickname*</ion-label>      \r\n  </ion-item>\r\n\r\n  <ion-item>\r\n    <ion-input placeholder=\"Nickname*\"></ion-input>\r\n  </ion-item>      \r\n\r\n  <!-- Password -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Contraseña*</ion-label>      \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input placeholder=\"Contraseña*\" type=\"password\"></ion-input>\r\n  </ion-item>\r\n\r\n  <!-- Repeat -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Repite la contraseña*</ion-label>      \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input placeholder=\"Repite la contraseña*\" type=\"password\"></ion-input>\r\n  </ion-item>\r\n\r\n  <!-- Email -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Email*</ion-label>      \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input placeholder=\"Email*\" type=\"email\"></ion-input>\r\n  </ion-item>\r\n\r\n  <!-- Nombre -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Nombre*</ion-label>      \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input placeholder=\"Nombre*\"></ion-input>\r\n  </ion-item>\r\n\r\n  <!-- Apellidos -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Apellidos*</ion-label>      \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input placeholder=\"Apellidos*\"></ion-input>\r\n  </ion-item>\r\n\r\n\r\n</ion-content>\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button defaultHref=\"/login\"></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"showAlert()\">\r\n        <ion-icon name=\"help-circle-outline\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n    <ion-title>Registro</ion-title>    \r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <ion-item lines=\"none\" class=\"user-head\">\r\n      <img class=\"circle-pic\" src=\"../../../assets/avatar.png\" />\r\n  </ion-item>    \r\n  <ion-item style=\"margin-left: auto;margin-right: auto;\" lines=\"none\">\r\n    <ion-button block clear class=\"button-no-background\" color=\"transparent\" (click)=\"getImage()\">Cambiar avatar</ion-button>\r\n  </ion-item>\r\n\r\n  <!-- Nickname -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Nickname*</ion-label>      \r\n  </ion-item>\r\n\r\n  <ion-item>\r\n    <ion-input [(ngModel)]=\"nickname\" placeholder=\"Nickname*\"></ion-input>\r\n  </ion-item>      \r\n\r\n  <!-- Password -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Contraseña*</ion-label>      \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input [(ngModel)]=\"password\" placeholder=\"Contraseña (6 caracteres min.)*\" type=\"password\"></ion-input>\r\n  </ion-item>\r\n\r\n  <!-- Repeat -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Repite la contraseña*</ion-label>      \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input [(ngModel)]=\"password2\" placeholder=\"Repite la contraseña*\" type=\"password\"></ion-input>\r\n  </ion-item>\r\n\r\n  <!-- Email -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Email*</ion-label>      \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input [(ngModel)]=\"email\" placeholder=\"Email validado*\" type=\"email\"></ion-input>\r\n  </ion-item>\r\n\r\n  <!-- Nombre -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Nombre*</ion-label>      \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input [(ngModel)]=\"name\" placeholder=\"Nombre*\"></ion-input>\r\n  </ion-item>\r\n\r\n  <!-- Apellidos -->\r\n  <ion-item lines=\"none\">\r\n    <ion-label class=\"label\">Apellidos*</ion-label>      \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input [(ngModel)]=\"surname\" placeholder=\"Apellidos*\"></ion-input>\r\n  </ion-item>\r\n\r\n  <ion-button (click)=\"register()\" style=\"margin-top: 20px;\" expand=\"block\">Registro</ion-button>\r\n\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -69,7 +69,7 @@ module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"sta
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".circle-pic {\n  width: 100px;\n  height: 100px;\n  margin-left: auto;\n  margin-right: auto;\n  border-radius: 50%; }\n\n.button-no-background {\n  color: blue;\n  padding: 0;\n  border: none;\n  background: none;\n  margin-left: auto;\n  margin-right: auto; }\n\n.label {\n  font-size: 15px;\n  margin-bottom: -15px; }\n\n.selector {\n  max-width: 100% !important; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcHVibGljL3JlZ2lzdGVyL0M6XFxVc2Vyc1xcQTE3MEE2QlxcRGVza3RvcFxcZ2VuaWw0OTJcXGdlbmlsNDkyL3NyY1xcYXBwXFxwdWJsaWNcXHJlZ2lzdGVyXFxyZWdpc3Rlci5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxZQUFXO0VBQ1gsYUFBWTtFQUNaLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFHbEIsa0JBQWtCLEVBQUE7O0FBR3RCO0VBQ0ksV0FBVztFQUNYLFVBQVU7RUFDVixZQUFZO0VBQ1osZ0JBQWdCO0VBQ2hCLGlCQUFpQjtFQUNqQixrQkFBa0IsRUFBQTs7QUFHdEI7RUFDSSxlQUFlO0VBQ2Ysb0JBQW9CLEVBQUE7O0FBR3hCO0VBQ0ksMEJBQTBCLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9wdWJsaWMvcmVnaXN0ZXIvcmVnaXN0ZXIucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNpcmNsZS1waWMge1xyXG4gICAgd2lkdGg6MTAwcHg7XHJcbiAgICBoZWlnaHQ6MTAwcHg7XHJcbiAgICBtYXJnaW4tbGVmdDogYXV0bztcclxuICAgIG1hcmdpbi1yaWdodDogYXV0bztcclxuXHJcbiAgICAtd2Via2l0LWJvcmRlci1yYWRpdXM6IDUwJTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcclxufVxyXG5cclxuLmJ1dHRvbi1uby1iYWNrZ3JvdW5kIHtcclxuICAgIGNvbG9yOiBibHVlO1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIGJhY2tncm91bmQ6IG5vbmU7XHJcbiAgICBtYXJnaW4tbGVmdDogYXV0bztcclxuICAgIG1hcmdpbi1yaWdodDogYXV0bztcclxufVxyXG5cclxuLmxhYmVse1xyXG4gICAgZm9udC1zaXplOiAxNXB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogLTE1cHg7IFxyXG59XHJcblxyXG4uc2VsZWN0b3Ige1xyXG4gICAgbWF4LXdpZHRoOiAxMDAlICFpbXBvcnRhbnQ7IFxyXG59Il19 */"
+module.exports = ".circle-pic {\n  width: 100px;\n  height: 100px;\n  margin-left: auto;\n  margin-right: auto;\n  border-radius: 50%; }\n\n.button-no-background {\n  color: blue;\n  padding: 0;\n  border: none;\n  background: none;\n  margin-left: auto;\n  margin-right: auto; }\n\n.label {\n  font-size: 15px;\n  margin-bottom: -15px; }\n\n.selector {\n  max-width: 100% !important; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcHVibGljL3JlZ2lzdGVyL0M6XFxVc2Vyc1xcQTE3MEE2QlxcRGVza3RvcFxcZ2VuaWw0OTIvc3JjXFxhcHBcXHB1YmxpY1xccmVnaXN0ZXJcXHJlZ2lzdGVyLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFlBQVc7RUFDWCxhQUFZO0VBQ1osaUJBQWlCO0VBQ2pCLGtCQUFrQjtFQUdsQixrQkFBa0IsRUFBQTs7QUFHdEI7RUFDSSxXQUFXO0VBQ1gsVUFBVTtFQUNWLFlBQVk7RUFDWixnQkFBZ0I7RUFDaEIsaUJBQWlCO0VBQ2pCLGtCQUFrQixFQUFBOztBQUd0QjtFQUNJLGVBQWU7RUFDZixvQkFBb0IsRUFBQTs7QUFHeEI7RUFDSSwwQkFBMEIsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3B1YmxpYy9yZWdpc3Rlci9yZWdpc3Rlci5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2lyY2xlLXBpYyB7XHJcbiAgICB3aWR0aDoxMDBweDtcclxuICAgIGhlaWdodDoxMDBweDtcclxuICAgIG1hcmdpbi1sZWZ0OiBhdXRvO1xyXG4gICAgbWFyZ2luLXJpZ2h0OiBhdXRvO1xyXG5cclxuICAgIC13ZWJraXQtYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gICAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG59XHJcblxyXG4uYnV0dG9uLW5vLWJhY2tncm91bmQge1xyXG4gICAgY29sb3I6IGJsdWU7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgYmFja2dyb3VuZDogbm9uZTtcclxuICAgIG1hcmdpbi1sZWZ0OiBhdXRvO1xyXG4gICAgbWFyZ2luLXJpZ2h0OiBhdXRvO1xyXG59XHJcblxyXG4ubGFiZWx7XHJcbiAgICBmb250LXNpemU6IDE1cHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAtMTVweDsgXHJcbn1cclxuXHJcbi5zZWxlY3RvciB7XHJcbiAgICBtYXgtd2lkdGg6IDEwMCUgIWltcG9ydGFudDsgXHJcbn0iXX0= */"
 
 /***/ }),
 
@@ -87,14 +87,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/image-picker/ngx */ "./node_modules/@ionic-native/image-picker/ngx/index.js");
+/* harmony import */ var _services_http_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/http.service */ "./src/app/services/http.service.ts");
+/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/authentication.service */ "./src/app/services/authentication.service.ts");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
 
 
 
 
+
+
+
+
+var FIRST_REF = 'first-ref';
 var RegisterPage = /** @class */ (function () {
-    function RegisterPage(alertController, imagePicker) {
+    function RegisterPage(alertController, imagePicker, httpService, toastController, authService, storage) {
         this.alertController = alertController;
         this.imagePicker = imagePicker;
+        this.httpService = httpService;
+        this.toastController = toastController;
+        this.authService = authService;
+        this.storage = storage;
+        this.userData = [];
+        this.valid = true;
+        this.valido = true;
     }
     RegisterPage.prototype.ngOnInit = function () {
     };
@@ -148,13 +163,154 @@ var RegisterPage = /** @class */ (function () {
             alert(err);
         });
     };
+    RegisterPage.prototype.register = function () {
+        var _this = this;
+        if (this.password != this.password2) {
+            this.errorMsg = "Las contrasenyas no coinciden.";
+        }
+        else {
+            this.userData.push(this.nickname, this.password, this.email, this.name, this.surname);
+            var i_1 = 0;
+            this.userData.forEach(function (val) {
+                _this.validate(i_1, val);
+                i_1++;
+            });
+            if (this.valid) {
+                this.httpService.getEmail(this.email).then(function (res) {
+                    if (res.status != 205) {
+                        _this.userData.push(res.valid_email[0].role);
+                        _this.httpService.getUserByEmail(_this.userData[2]).then(function (em) {
+                            if (em.user[0].email !== _this.userData[2]) {
+                                _this.httpService.postUser(_this.userData).then(function () {
+                                    _this.authService.login(_this.userData[0], _this.password).then(function () {
+                                        _this.storage.set(FIRST_REF, false);
+                                    });
+                                    _this.errorMsg = "Usuario registrado.";
+                                });
+                            }
+                            else {
+                                _this.errorMsg = "Ese email ya esta en uso.";
+                            }
+                        });
+                        _this.httpService.getUser(_this.userData[0]).then(function (user) {
+                            if (user.user[0].login !== _this.userData[0]) {
+                                _this.httpService.postUser(_this.userData).then(function () {
+                                    _this.authService.login(_this.userData[0], _this.password).then(function () {
+                                        _this.storage.set(FIRST_REF, false);
+                                    });
+                                    _this.errorMsg = "Usuario registrado.";
+                                });
+                            }
+                            else {
+                                _this.errorMsg = "Ese nickname ya esta en uso.";
+                            }
+                        });
+                    }
+                    else {
+                        _this.errorMsg = "El email no figura en la base de datos. Por favor contacte con Pablo Scouter.";
+                    }
+                    if (res.status == 401) {
+                        _this.errorMsg = "El nickname o el email ya existen.";
+                    }
+                }).catch(function () {
+                    _this.errorMsg = "El email no figura en la base de datos. Por favor contacte con Pablo Scouter.";
+                });
+            }
+        }
+        this.presentToast();
+        this.errorMsg = "Usuario registrado.";
+    };
+    RegisterPage.prototype.validate = function (index, input) {
+        var _this = this;
+        if (typeof input === "undefined") {
+            this.errorMsg = "Rellene los campos obligatorios";
+            this.valid = false;
+        }
+        else {
+            switch (index) {
+                case 0:
+                    if (input.length < 4) {
+                        this.errorMsg = "El nickname no puede tener menos de 4 caracteres.";
+                        this.valid = false;
+                    }
+                    break;
+                case 1:
+                    if (input.length < 6) {
+                        this.errorMsg = "La contrasenya debe tener al menos 6 caracteres.";
+                        this.valid = false;
+                    }
+                    break;
+                case 2:
+                    this.httpService.getEmail(input).catch(function () {
+                        _this.errorMsg = "El email no figura en la base de datos. Por favor contacte con Pablo Scouter.";
+                        _this.valid = false;
+                    });
+                    break;
+                case 3:
+                    if (input.length < 1) {
+                        this.errorMsg = "El nombre no puede ser vacio.";
+                        this.valid = false;
+                    }
+                    break;
+                case 4:
+                    if (input.length < 1) {
+                        this.errorMsg = "El apellido no puede ser vacio.";
+                        this.valid = false;
+                    }
+                    break;
+            }
+        }
+    };
+    RegisterPage.prototype.checkEmails = function (email) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.httpService.getUsers().then(function (val) {
+                            console.log(val);
+                            val.user.forEach(function (element) {
+                                if (element.email == email) {
+                                    _this.valido = false;
+                                }
+                            });
+                        })];
+                    case 1:
+                        _a.sent();
+                        console.log(this.valido + " vALIDO");
+                        return [2 /*return*/, this.valido];
+                }
+            });
+        });
+    };
+    RegisterPage.prototype.presentToast = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var toast;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.toastController.create({
+                            message: this.errorMsg,
+                            duration: 2000
+                        })];
+                    case 1:
+                        toast = _a.sent();
+                        toast.present();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     RegisterPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-register',
             template: __webpack_require__(/*! ./register.page.html */ "./src/app/public/register/register.page.html"),
             styles: [__webpack_require__(/*! ./register.page.scss */ "./src/app/public/register/register.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["AlertController"], _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_3__["ImagePicker"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["AlertController"],
+            _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_3__["ImagePicker"],
+            _services_http_service__WEBPACK_IMPORTED_MODULE_4__["HttpService"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"],
+            _services_authentication_service__WEBPACK_IMPORTED_MODULE_5__["AuthenticationService"],
+            _ionic_storage__WEBPACK_IMPORTED_MODULE_6__["Storage"]])
     ], RegisterPage);
     return RegisterPage;
 }());

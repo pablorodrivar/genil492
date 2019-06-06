@@ -849,13 +849,29 @@ var map = {
 		"./src/app/tab3/tab3.module.ts",
 		"tab3-tab3-module"
 	],
-	"./dashboard/dashboard.module": [
-		"./src/app/members/dashboard/dashboard.module.ts",
-		"dashboard-dashboard-module"
+	"../tabs/tabs.module": [
+		"./src/app/tabs/tabs.module.ts",
+		"tabs-tabs-module"
+	],
+	"./add-post/add-post.module": [
+		"./src/app/add-post/add-post.module.ts",
+		"add-post-add-post-module"
+	],
+	"./cancionero/cancionero.module": [
+		"./src/app/cancionero/cancionero.module.ts",
+		"cancionero-cancionero-module"
+	],
+	"./intendance/intendance.module": [
+		"./src/app/intendance/intendance.module.ts",
+		"intendance-intendance-module"
 	],
 	"./members/member-routing.module": [
 		"./src/app/members/member-routing.module.ts",
 		"members-member-routing-module"
+	],
+	"./post/post.module": [
+		"./src/app/post/post.module.ts",
+		"post-post-module"
 	],
 	"./public/login/login.module": [
 		"./src/app/public/login/login.module.ts",
@@ -864,6 +880,10 @@ var map = {
 	"./public/register/register.module": [
 		"./src/app/public/register/register.module.ts",
 		"public-register-register-module"
+	],
+	"./section/section.module": [
+		"./src/app/section/section.module.ts",
+		"section-section-module"
 	],
 	"./tabs/tabs.module": [
 		"./src/app/tabs/tabs.module.ts",
@@ -914,11 +934,19 @@ var routes = [
     { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
     { path: 'login', loadChildren: './public/login/login.module#LoginPageModule' },
     { path: 'register', loadChildren: './public/register/register.module#RegisterPageModule' },
+    { path: 'post/:id', loadChildren: './post/post.module#PostPageModule' },
+    { path: 'section/:id', loadChildren: './section/section.module#SectionPageModule' },
+    { path: 'add-post', loadChildren: './add-post/add-post.module#AddPostPageModule' },
     {
         path: 'members',
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
         loadChildren: './members/member-routing.module#MemberRoutingModule'
-    }
+    },
+    { path: 'post', loadChildren: './post/post.module#PostPageModule' },
+    { path: 'section', loadChildren: './section/section.module#SectionPageModule' },
+    { path: 'add-post', loadChildren: './add-post/add-post.module#AddPostPageModule' },
+    { path: 'cancionero', loadChildren: './cancionero/cancionero.module#CancioneroPageModule' },
+    { path: 'intendance', loadChildren: './intendance/intendance.module#IntendancePageModule' }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -1037,6 +1065,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic-native/image-picker/ngx */ "./node_modules/@ionic-native/image-picker/ngx/index.js");
+/* harmony import */ var _pipes_thumb_content_pipe__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pipes/thumb-content.pipe */ "./src/app/pipes/thumb-content.pipe.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _ionic_native_File_ngx__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ionic-native/File/ngx */ "./node_modules/@ionic-native/File/ngx/index.js");
+/* harmony import */ var _ionic_native_file_opener_ngx__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ionic-native/file-opener/ngx */ "./node_modules/@ionic-native/file-opener/ngx/index.js");
+/* harmony import */ var _ionic_native_file_transfer_ngx__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ionic-native/file-transfer/ngx */ "./node_modules/@ionic-native/file-transfer/ngx/index.js");
+/* harmony import */ var _ionic_native_document_viewer_ngx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ionic-native/document-viewer/ngx */ "./node_modules/@ionic-native/document-viewer/ngx/index.js");
+/* harmony import */ var firebaseui_angular__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! firebaseui-angular */ "./node_modules/firebaseui-angular/fesm5/firebaseui-angular.js");
+/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! firebase */ "./node_modules/firebase/dist/index.cjs.js");
+/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(firebase__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _angular_fire__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/fire */ "./node_modules/@angular/fire/index.js");
+/* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/fire/auth */ "./node_modules/@angular/fire/auth/index.js");
 
 
 
@@ -1049,25 +1088,58 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+// currently there is a bug while building the app with --prod
+// - https://github.com/RaphaelJenni/FirebaseUI-Angular/issues/76
+// the plugin exposes the two libraries as well. You can use those:
+
+
+
+
+var firebaseUiAuthConfig = {
+    signInFlow: 'popup',
+    signInOptions: [
+        {
+            requireDisplayName: false,
+            provider: firebase__WEBPACK_IMPORTED_MODULE_19__["auth"].EmailAuthProvider.PROVIDER_ID
+        },
+    ],
+    tosUrl: '<your-tos-link>',
+    privacyPolicyUrl: '<your-privacyPolicyUrl-link>',
+    credentialHelper: firebaseui_angular__WEBPACK_IMPORTED_MODULE_18__["firebaseui"].auth.CredentialHelper.NONE
+};
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]],
+            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"], _pipes_thumb_content_pipe__WEBPACK_IMPORTED_MODULE_12__["ThumbContentPipe"]],
             entryComponents: [],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
                 _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(),
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_7__["AppRoutingModule"],
                 _ionic_storage__WEBPACK_IMPORTED_MODULE_9__["IonicStorageModule"].forRoot(),
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClientModule"]
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClientModule"],
+                _angular_fire__WEBPACK_IMPORTED_MODULE_20__["AngularFireModule"].initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_13__["environment"].firebase),
+                _angular_fire_auth__WEBPACK_IMPORTED_MODULE_21__["AngularFireAuthModule"],
+                firebaseui_angular__WEBPACK_IMPORTED_MODULE_18__["FirebaseUIModule"].forRoot(firebaseUiAuthConfig)
             ],
             providers: [
                 _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__["StatusBar"],
                 _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_5__["SplashScreen"],
                 _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_11__["ImagePicker"],
-                { provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] }
+                _ionic_native_File_ngx__WEBPACK_IMPORTED_MODULE_14__["File"],
+                _ionic_native_file_opener_ngx__WEBPACK_IMPORTED_MODULE_15__["FileOpener"],
+                _ionic_native_file_transfer_ngx__WEBPACK_IMPORTED_MODULE_16__["FileTransfer"],
+                _ionic_native_document_viewer_ngx__WEBPACK_IMPORTED_MODULE_17__["DocumentViewer"],
+                { provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] },
+                _pipes_thumb_content_pipe__WEBPACK_IMPORTED_MODULE_12__["ThumbContentPipe"]
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]]
         })
@@ -1115,6 +1187,38 @@ var AuthGuard = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/pipes/thumb-content.pipe.ts":
+/*!*********************************************!*\
+  !*** ./src/app/pipes/thumb-content.pipe.ts ***!
+  \*********************************************/
+/*! exports provided: ThumbContentPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThumbContentPipe", function() { return ThumbContentPipe; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var ThumbContentPipe = /** @class */ (function () {
+    function ThumbContentPipe() {
+    }
+    ThumbContentPipe.prototype.transform = function (value, args) {
+        return value.substring(0, 20);
+    };
+    ThumbContentPipe = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Pipe"])({
+            name: 'thumbContent'
+        })
+    ], ThumbContentPipe);
+    return ThumbContentPipe;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/authentication.service.ts":
 /*!****************************************************!*\
   !*** ./src/app/services/authentication.service.ts ***!
@@ -1138,6 +1242,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var TOKEN_KEY = 'auth-token';
+var USER_KEY = 'user-key';
 var AuthenticationService = /** @class */ (function () {
     function AuthenticationService(storage, plt, httpService) {
         var _this = this;
@@ -1162,9 +1267,10 @@ var AuthenticationService = /** @class */ (function () {
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.httpService.getAuthentication(user, password).then(function (val) {
+                    case 0: return [4 /*yield*/, this.httpService.getAuthentication(user, window.btoa(password)).then(function (val) {
                             _this.httpService.getUser(user).then(function (val) {
                                 _this.httpService.postSession(val.user[0].id, val.user[0].login);
+                                _this.storage.set(USER_KEY, val.user[0]);
                             });
                             return _this.storage.set(TOKEN_KEY, val).then(function () {
                                 _this.authenticationState.next(true);
@@ -1180,6 +1286,7 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.logout = function () {
         var _this = this;
         return this.storage.remove(TOKEN_KEY).then(function () {
+            _this.storage.remove(USER_KEY);
             _this.authenticationState.next(false);
         });
     };
@@ -1218,6 +1325,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var TOKEN_KEY = 'auth-token';
+var USER_KEY = 'user-key';
 var HttpService = /** @class */ (function () {
     function HttpService(http, storage) {
         this.http = http;
@@ -1283,6 +1391,32 @@ var HttpService = /** @class */ (function () {
             });
         });
     };
+    HttpService.prototype.getUsers = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/user";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
     HttpService.prototype.postSession = function (userId, login) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var url, b64access;
@@ -1303,6 +1437,666 @@ var HttpService = /** @class */ (function () {
                             "login": login,
                             "date": new Date()
                         })
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.postUser = function (userData) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/user/new";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'POST',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        },
+                        body: JSON.stringify({
+                            "login": userData[0],
+                            "password": window.btoa(userData[1]),
+                            "email": userData[2],
+                            "name": userData[3],
+                            "surname": userData[4],
+                            "sign_up_date": new Date(),
+                            "role": userData[5],
+                            "photo": null
+                        })
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getEmail = function (email) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/valid_email/email/" + email;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getLastPosts = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/post/last";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getRole = function (id) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/role/" + id;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getPost = function (id) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/post/" + id;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.postComment = function (commentData) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/comment/new";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'POST',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        },
+                        body: JSON.stringify({
+                            "user": commentData[0],
+                            "post": commentData[1],
+                            "comment": commentData[2]
+                        })
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getPostComments = function (post_id) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/comment/post_id/" + post_id;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getPosts = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/post";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getServices = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/service";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.post = function (postData) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/post/new";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'POST',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        },
+                        body: JSON.stringify({
+                            "title": postData[0],
+                            "content": postData[1],
+                            "date": new Date(),
+                            "author": postData[4],
+                            "event": postData[2],
+                            "scope": postData[3],
+                            "section": postData[5],
+                            "thumbnail": "null",
+                            "gallery": "null"
+                        })
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.postEvent = function (eventData) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/event/new";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'POST',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        },
+                        body: JSON.stringify({
+                            "name": eventData[0],
+                            "beg_date": eventData[1],
+                            "end_date": eventData[2],
+                            "type": eventData[3]
+                        })
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.numberOfAssistants = function (eventId) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/assistance/number/" + eventId;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getEvent = function (name) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/event/name/" + name;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getPostBySection = function (section) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/post/section/" + section;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getSons = function (father_id) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/family/son/" + father_id;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.postAssistance = function (asData) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/assistance/new";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'POST',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        },
+                        body: JSON.stringify({
+                            "user": asData[0],
+                            "event": asData[1]
+                        })
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getUserById = function (id) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/user/" + id;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getAssistantsByEvent = function (id) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/assistance/event/" + id;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getValidEmails = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/valid_email";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getUserByEmail = function (email) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/user/email/" + email;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getUserAssistance = function (user) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/assistance/user/" + user;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getEventById = function (id) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/event/" + id;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.deleteAssistance = function (id, event) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/assistance/user/" + id + "/event/" + event;
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'DELETE',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
+                    }).then(function (res) {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                        else {
+                            return res;
+                        }
+                    }).catch(function (err) { return err; })];
+            });
+        });
+    };
+    HttpService.prototype.getSongs = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var url, b64access;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                url = "https://genil-api-v3-puvlo.c9users.io/public/song";
+                b64access = window.btoa(this.token);
+                // START FETCH
+                return [2 /*return*/, fetch(url, {
+                        method: 'GET',
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic " + b64access
+                        }
                     }).then(function (res) {
                         if (res.status === 200) {
                             return res.json();
@@ -1341,7 +2135,16 @@ __webpack_require__.r(__webpack_exports__);
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 var environment = {
-    production: false
+    production: false,
+    firebase: {
+        apiKey: "AIzaSyAy5xW3OF5UoW6Y4EfvQUkNnqIOoznlBsM",
+        authDomain: "genil-api.firebaseapp.com",
+        databaseURL: "https://genil-api.firebaseio.com",
+        projectId: "genil-api",
+        storageBucket: "genil-api.appspot.com",
+        messagingSenderId: "261809308074",
+        appId: "1:261809308074:web:878c6da3b96515c0"
+    }
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -1388,7 +2191,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\A170A6B\Desktop\genil492\genil492\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\A170A6B\Desktop\genil492\src\main.ts */"./src/main.ts");
 
 
 /***/ })

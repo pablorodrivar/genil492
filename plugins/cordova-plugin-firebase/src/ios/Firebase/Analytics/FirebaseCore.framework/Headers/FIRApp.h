@@ -15,13 +15,16 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#import "FIRCoreSwiftNameSupport.h"
 
 @class FIROptions;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /** A block that takes a BOOL and has no return value. */
-typedef void (^FIRAppVoidBoolCallback)(BOOL success) NS_SWIFT_NAME(FirebaseAppVoidBoolCallback);
+typedef void (^FIRAppVoidBoolCallback)(BOOL success) FIR_SWIFT_NAME(FirebaseAppVoidBoolCallback);
 
 /**
  * The entry point of Firebase SDKs.
@@ -41,14 +44,13 @@ typedef void (^FIRAppVoidBoolCallback)(BOOL success) NS_SWIFT_NAME(FirebaseAppVo
  * It is also possible to change the default logging level in code by calling setLoggerLevel: on
  * the FIRConfiguration interface.
  */
-NS_SWIFT_NAME(FirebaseApp)
+FIR_SWIFT_NAME(FirebaseApp)
 @interface FIRApp : NSObject
 
 /**
  * Configures a default Firebase app. Raises an exception if any configuration step fails. The
  * default app is named "__FIRAPP_DEFAULT". This method should be called after the app is launched
- * and before using Firebase services. This method is thread safe and contains synchronous file I/O
- * (reading GoogleService-Info.plist from disk).
+ * and before using Firebase services. This method is thread safe.
  */
 + (void)configure;
 
@@ -59,7 +61,7 @@ NS_SWIFT_NAME(FirebaseApp)
  *
  * @param options The Firebase application options used to configure the service.
  */
-+ (void)configureWithOptions:(FIROptions *)options NS_SWIFT_NAME(configure(options:));
++ (void)configureWithOptions:(FIROptions *)options FIR_SWIFT_NAME(configure(options:));
 
 /**
  * Configures a Firebase app with the given name and options. Raises an exception if any
@@ -69,27 +71,33 @@ NS_SWIFT_NAME(FirebaseApp)
                Letters, Numbers and Underscore.
  * @param options The Firebase application options used to configure the services.
  */
-// clang-format off
-+ (void)configureWithName:(NSString *)name
-                  options:(FIROptions *)options NS_SWIFT_NAME(configure(name:options:));
-// clang-format on
++ (void)configureWithName:(NSString *)name options:(FIROptions *)options
+    FIR_SWIFT_NAME(configure(name:options:));
 
 /**
  * Returns the default app, or nil if the default app does not exist.
  */
-+ (nullable FIRApp *)defaultApp NS_SWIFT_NAME(app());
++ (nullable FIRApp *)defaultApp FIR_SWIFT_NAME(app());
 
 /**
  * Returns a previously created FIRApp instance with the given name, or nil if no such app exists.
  * This method is thread safe.
  */
-+ (nullable FIRApp *)appNamed:(NSString *)name NS_SWIFT_NAME(app(name:));
++ (nullable FIRApp *)appNamed:(NSString *)name FIR_SWIFT_NAME(app(name:));
 
+#if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 /**
  * Returns the set of all extant FIRApp instances, or nil if there are no FIRApp instances. This
  * method is thread safe.
  */
-@property(class, readonly, nullable) NSDictionary<NSString *, FIRApp *> *allApps;
+@property(class, readonly, nullable) NSDictionary <NSString *, FIRApp *> *allApps;
+#else
+/**
+ * Returns the set of all extant FIRApp instances, or nil if there are no FIRApp instances. This
+ * method is thread safe.
+ */
++ (nullable NSDictionary <NSString *, FIRApp *> *)allApps FIR_SWIFT_NAME(allApps());
+#endif  // defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
 /**
  * Cleans up the current FIRApp, freeing associated data and returning its name to the pool for
@@ -112,15 +120,6 @@ NS_SWIFT_NAME(FirebaseApp)
  * Gets a copy of the options for this app. These are non-modifiable.
  */
 @property(nonatomic, copy, readonly) FIROptions *options;
-
-/**
- * Gets or sets whether automatic data collection is enabled for all products. Defaults to `YES`
- * unless `FirebaseDataCollectionDefaultEnabled` is set to `NO` in your app's Info.plist. This value
- * is persisted across runs of the app so that it can be set once when users have consented to
- * collection.
- */
-@property(nonatomic, readwrite, getter=isDataCollectionDefaultEnabled)
-    BOOL dataCollectionDefaultEnabled;
 
 @end
 

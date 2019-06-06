@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"common":"common","dashboard-dashboard-module":"dashboard-dashboard-module","members-member-routing-module":"members-member-routing-module","public-login-login-module":"public-login-login-module","public-register-register-module":"public-register-register-module","tab1-tab1-module":"tab1-tab1-module","tab2-tab2-module":"tab2-tab2-module","tab3-tab3-module":"tab3-tab3-module","tabs-tabs-module":"tabs-tabs-module"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"common":"common","add-post-add-post-module":"add-post-add-post-module","cancionero-cancionero-module":"cancionero-cancionero-module","intendance-intendance-module":"intendance-intendance-module","members-member-routing-module":"members-member-routing-module","post-post-module":"post-post-module","public-login-login-module":"public-login-login-module","public-register-register-module":"public-register-register-module","section-section-module":"section-section-module","tab1-tab1-module":"tab1-tab1-module","tab2-tab2-module":"tab2-tab2-module","tab3-tab3-module":"tab3-tab3-module","tabs-tabs-module":"tabs-tabs-module"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function

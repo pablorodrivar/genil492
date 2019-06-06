@@ -19,7 +19,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [
-    { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' }
+    //{path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' }
+    { path: 'dashboard', loadChildren: '../tabs/tabs.module#TabsPageModule' }
 ];
 var MemberRoutingModule = /** @class */ (function () {
     function MemberRoutingModule() {

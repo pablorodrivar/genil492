@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "140919541964",
-    "firebase_url": "https://grupo-scout-genil.firebaseio.com",
-    "project_id": "grupo-scout-genil",
-    "storage_bucket": "grupo-scout-genil.appspot.com"
+    "project_number": "261809308074",
+    "firebase_url": "https://genil-api.firebaseio.com",
+    "project_id": "genil-api",
+    "storage_bucket": "genil-api.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:140919541964:android:47bd459af1c19bdb",
+        "mobilesdk_app_id": "1:261809308074:android:6b2a5edc3f2a2ca9",
         "android_client_info": {
-          "package_name": "io.ionic.starter"
+          "package_name": "com.pablo.genil"
         }
       },
       "oauth_client": [
         {
-          "client_id": "140919541964-jitjahd5epijvnrc4m4rhjcq288qauus.apps.googleusercontent.com",
+          "client_id": "261809308074-3fotgljq647euluse1td6v09ac6bma03.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pablo.genil",
+            "certificate_hash": "91f974b51cdc058cd2c1df96265ec5421b7a35bd"
+          }
+        },
+        {
+          "client_id": "261809308074-d01hi1km999eak2j4hqnfjsnk7omnrkf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCrbKR30oxZMPB9Wv5jMKXkScSyNQu5pmo"
+          "current_key": "AIzaSyBkjY46Mvd8cguiu18deGxcs8T4P8qDW9c"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "140919541964-jitjahd5epijvnrc4m4rhjcq288qauus.apps.googleusercontent.com",
+              "client_id": "261809308074-d01hi1km999eak2j4hqnfjsnk7omnrkf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
