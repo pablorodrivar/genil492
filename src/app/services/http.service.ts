@@ -25,17 +25,15 @@ export class HttpService implements OnInit {
     }
   }
 
-  async getAuthentication(user: string, password: string) {
-    let url = "https://genil-api-v3-puvlo.c9users.io/public/";
-    let b64access = window.btoa(user + ":" + password);
+  async getAuthentication(email:string) {
+    let url = "https://genil-api.firebaseapp.com/api/v1/valid_email/email/"+email;
     // START FETCH
     return fetch(url, {
       method: 'GET',
       credentials: 'include',
       mode: 'cors',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Basic " + b64access
+        "Content-Type": "application/json"
       }
     }).then(res => {
       if (res.status === 200) {
@@ -44,7 +42,6 @@ export class HttpService implements OnInit {
         return res;
       }
     }).catch(err => err);
-    // END FETCH
   }
 
   async getUser(login: string) {
@@ -121,27 +118,22 @@ export class HttpService implements OnInit {
   }
 
   async postUser(userData: any) {
-    let url = "https://genil-api-v3-puvlo.c9users.io/public/user/new";
-    let b64access = window.btoa(this.token);
+    let url = "https://genil-api.firebaseapp.com/api/v1/user";
     // START FETCH
     return fetch(url, {
       method: 'POST',
       credentials: 'include',
       mode: 'cors',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Basic " + b64access
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(
         {
-          "login": userData[0] , 
-          "password": window.btoa(userData[1]),
-          "email": userData[2],
-          "name": userData[3],
-          "surname": userData[4],
-          "sign_up_date": new Date(),
-          "role": userData[5],
-          "photo": null
+          "email": userData.email,
+          "name": userData.name,
+          "surname": userData.surname,
+          "role": userData.role,
+          "photo": userData.photo
         }
         )
     }).then(res => {
@@ -585,8 +577,7 @@ export class HttpService implements OnInit {
   }
 
   async getUserByEmail(email: any) {
-    let url = "https://genil-api-v3-puvlo.c9users.io/public/user/email/" + email;
-    let b64access = window.btoa(this.token);
+    let url = "https://genil-api.firebaseapp.com/api/v1/user/email/" + email;
     // START FETCH
     return fetch(url, {
       method: 'GET',
@@ -594,13 +585,12 @@ export class HttpService implements OnInit {
       mode: 'cors',
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Basic " + b64access
       }
     }).then(res => {
       if (res.status === 200) {
         return res.json();
       } else {
-        return res;
+        return res.json();
       }
     }).catch(err => err);
     // END FETCH

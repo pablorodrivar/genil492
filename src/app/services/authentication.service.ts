@@ -28,7 +28,7 @@ export class AuthenticationService {
     })
   }
 
-  async login(user: string, password: string) {
+  /*async login(user: string, password: string) {
     await this.httpService.getAuthentication(user, window.btoa(password)).then(val => {
       this.httpService.getUser(user).then(val => {
         this.httpService.postSession(val.user[0].id, val.user[0].login);
@@ -40,7 +40,7 @@ export class AuthenticationService {
         this.authenticationState.next(true);
       });
     });    
-  }
+  }*/
 
   logout() {
     return this.storage.remove(TOKEN_KEY).then(() => {

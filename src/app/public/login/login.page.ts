@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from './../../services/authentication.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
-
-const FIRST_REF = 'first-ref';
+import { HttpService } from '../../services/http.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +11,38 @@ const FIRST_REF = 'first-ref';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public logedIn: boolean = false;
+  public logedIn: boolean = true;
+  public role: string;
+  public email: string;
+  public firstLogin = false;
+  public name: string;
+  public surname: string;
 
-  constructor(private authService: AuthenticationService, public toastController: ToastController, public storage: Storage,
-    public afAuth: AngularFireAuth) { }
+  constructor(public toastController: ToastController, public storage: Storage,
+    public afAuth: AngularFireAuth, public http: HttpService, public alertController: AlertController) { }
 
   ngOnInit() {
+  }
+
+  deleteUser() {
+    let user = firebase.auth().currentUser;
+
+    user.delete().then(function() {
+      console.log("User deleted")
+    });
+  }
+
+  register() {
+    if(typeof this.name !== undefined && this.name != undefined && this.name.length > 0 &&
+      typeof this.surname !== undefined && this.surname != undefined && this.surname.length > 0) {
+        let user = { email: this.email, name: this.name, photo: '', role: this.role, surname: this.surname };
+        console.log(user.email)
+        this.http.postUser(user).then(data => {
+          console.log(data)
+        });
+      } else {
+        this.presentToast();
+      }
   }
 
   signOut() {
@@ -27,23 +52,52 @@ export class LoginPage implements OnInit {
   }
 
   successCallback(event) {
-    console.log(event.authResult.user.email) 
-    this.logedIn = true;
+    this.email = event.authResult.user.email;
+
+    this.http.getAuthentication(this.email).then((data) => {
+      let array = Object.values(data);
+      if(array.length > 0) {        
+        array.forEach(val => {
+          let em = Object.values(val)[1];                 
+          if(this.email == em) {
+            this.role = Object.values(val)[0]; 
+            this.logedIn = true;
+
+            this.http.getUserByEmail(this.email).then(data => {
+              if(data == "SyntaxError: Unexpected token N in JSON at position 0") {
+                this.firstLogin = true;                
+              }
+            });
+          } else {
+            this.presentAlert();
+            this.logedIn = false;
+            this.deleteUser();
+          }
+        });
+      } else {
+        this.presentAlert();
+        this.logedIn = false;
+        this.deleteUser();
+      }      
+    });    
   }
 
-  /*login() {        
-    this.authService.login(this.user, this.password).then(() => {
-      this.storage.set(FIRST_REF, false);
-    }).catch((err) => {
-        this.presentToast();
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Error al acceder a la app',
+      subHeader: 'Email no válido',
+      message: 'El email introducido no figura en la base de datos, contacta con Pablo scouter para que te de de alta en la app.',
+      buttons: ['OK']
     });
+
+    await alert.present();
   }
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: 'Usuario o clave incorrectos.',
+      message: 'Debes introducir todos los datos para acceder.',
       duration: 2000
     });
     toast.present();
-  }*/
+  }
 }

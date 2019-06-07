@@ -84,7 +84,7 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  register() {
+  /*register() {
     if(this.password != this.password2) {
       this.errorMsg = "Las contrasenyas no coinciden."
     } else {
@@ -141,7 +141,7 @@ export class RegisterPage implements OnInit {
     
     this.presentToast();
     this.errorMsg = "Usuario registrado.";
-  }
+  }*/
 
   validate(index: number, input: string) {
     if(typeof input === "undefined") {      
