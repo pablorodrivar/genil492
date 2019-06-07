@@ -36,9 +36,9 @@ export class LoginPage implements OnInit {
     if(typeof this.name !== undefined && this.name != undefined && this.name.length > 0 &&
       typeof this.surname !== undefined && this.surname != undefined && this.surname.length > 0) {
         let user = { email: this.email, name: this.name, photo: '', role: this.role, surname: this.surname };
-        console.log(user.email)
+        localStorage.setItem('user', JSON.stringify(user));
         this.http.postUser(user).then(data => {
-          console.log(data)
+          console.log(data)          
         });
       } else {
         this.presentToast();
@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
 
   signOut() {
     this.afAuth.auth.signOut().then(()=> {
-      location.reload();
+      localStorage.setItem('user', '');
     });
   }
 
@@ -66,6 +66,9 @@ export class LoginPage implements OnInit {
             this.http.getUserByEmail(this.email).then(data => {
               if(data == "SyntaxError: Unexpected token N in JSON at position 0") {
                 this.firstLogin = true;                
+              } else {
+                let user = Object.values(data)[0];
+                localStorage.setItem('user', JSON.stringify(user))
               }
             });
           } else {
